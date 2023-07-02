@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "svrutil",
+  "version": "${version}",
+
+  "name": "SvrUtil",
+  "description": "Add utilities command for server management, and a couple vanilla tweaks.",
+  "authors": [
+    "LX86"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Kenny-Hui/Svrutil",
+    "sources": ""
+  },
+
+  "license": "MIT",
+  "icon": "assets/svrutil/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.lx.svrutil.SvrUtil"
+    ]
+  },
+  "mixins": [
+    "svrutil.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.9",
+    "fabric": "*",
+    "minecraft": "${mc_version}"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
