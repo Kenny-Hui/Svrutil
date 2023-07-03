@@ -3,7 +3,7 @@ Bunch of useful, and occasionally weird specific tweaks and commands for Fabric-
 
 ## Config file
 This mod will work out of the box with all the commands ready to be used.  
-There are however a config file to modify some vanilla behavior, in that case please see [here] (WIP).
+There are a config file to modify some vanilla behavior, in that case please see [here](CONFIG.md).
 
 ## Commands
 Note: These are just the default command configuration, you may optionally disable, change the required permission level or remap a command name in the [Command Config].  
