@@ -32,7 +32,7 @@ public class Mappings {
 
     public static void sendPlaySoundIdS2CPacket(World world, ServerPlayerEntity player, Identifier sound, SoundCategory soundCategory, Vec3d pos, float volume, float pitch) {
         #if MC_VERSION > "11902"
-            net.minecraft.registry.entry.RegistryEntry<SoundEvent> soundEvent = net.minecraft.registry.entry.RegistryEntry.of(net.minecraft.sound.SoundEvent.of(sound));
+            net.minecraft.registry.entry.RegistryEntry<net.minecraft.sound.SoundEvent> soundEvent = net.minecraft.registry.entry.RegistryEntry.of(net.minecraft.sound.SoundEvent.of(sound));
             player.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket(soundEvent, soundCategory, pos.x, pos.y, pos.z, volume, 1, world.getRandom().nextLong()));
         #else
             player.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket(sound, soundCategory, pos, volume, 1, world.getRandom().nextLong()));
