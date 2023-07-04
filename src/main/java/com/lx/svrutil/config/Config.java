@@ -12,6 +12,11 @@ public class Config {
     private static final Path configFolder = Paths.get(FabricLoader.getInstance().getConfigDir().toString(), "svrutil");
 
     public static Path getConfigPath(String filename) {
+        try {
+            configFolder.toFile().mkdirs();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return configFolder.resolve(filename);
     }
 
