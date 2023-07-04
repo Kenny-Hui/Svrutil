@@ -86,7 +86,7 @@ public class MainConfig {
         SvrUtil.LOGGER.info("[{}] Generating config...", ModInfo.MOD_NAME);
         final JsonObject jsonConfig = new JsonObject();
         final JsonArray welcomeConfig = new JsonArray();
-        final JsonObject welcomeConfig1 = JoinMessage.toJson(new JoinMessage(Mappings.literalText("Welcome title").formatted(Formatting.GREEN), Mappings.literalText("Welcome subtitle").formatted(Formatting.AQUA), Mappings.literalText("Please edit \"config/svrutil/config.json\" to change the welcome message.\n&bThank you for installing SvrUtil.").formatted(Formatting.GREEN), 20, Arrays.asList(1, 2, 3, 4)));
+        final JsonObject welcomeConfig1 = JoinMessage.toJson(new JoinMessage(Mappings.literalText("Welcome title").formatted(Formatting.GREEN), Mappings.literalText("Welcome subtitle").formatted(Formatting.AQUA), Mappings.literalText("Please edit \"config/svrutil/config.json\" to change the welcome message.\n\nThank you for installing SvrUtil.").formatted(Formatting.GREEN), 20, Arrays.asList(1, 2, 3, 4)));
         welcomeConfig.add(welcomeConfig1);
         jsonConfig.addProperty("fallingBlockDelay", fallingBlockDelay);
         jsonConfig.addProperty("fixedItemFrame", fixedItemFrame);

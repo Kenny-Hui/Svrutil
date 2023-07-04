@@ -53,9 +53,9 @@ public class JoinMessage {
         for(Integer i : joinMessage.permLevel) {
             permLevels.add(i);
         }
-        jsonObject.addProperty("title", Text.Serializer.toJson(joinMessage.title));
-        jsonObject.addProperty("subtitle", Text.Serializer.toJson(joinMessage.subtitle));
-        jsonObject.addProperty("message", Text.Serializer.toJson(joinMessage.joinMessage));
+        jsonObject.add("title", Text.Serializer.toJsonTree(joinMessage.title));
+        jsonObject.add("subtitle", Text.Serializer.toJsonTree(joinMessage.subtitle));
+        jsonObject.add("message", Text.Serializer.toJsonTree(joinMessage.joinMessage));
         jsonObject.addProperty("delayTick", joinMessage.delayTick);
         jsonObject.add("permLevels", permLevels);
         return jsonObject;
