@@ -6,6 +6,7 @@ import com.lx.svrutil.config.CommandConfig;
 import com.lx.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,15 +24,19 @@ public class where {
 
         dispatcher.register(CommandManager.literal(entry.commandName)
                 .requires(ctx -> ctx.hasPermissionLevel(entry.permLevel))
-                .then(CommandManager.argument("target", EntityArgumentType.player())
+                .then(CommandManager.argument("target", EntityArgumentType.entity())
                     .executes(context -> {
-                        ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+                        Entity target = EntityArgumentType.getEntity(context, "target");
                         String coords = Math.round(target.getX()) + " " + Math.round(target.getY()) + " " + Math.round(target.getZ());
                         ClickEvent tpClickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + coords);
                         HoverEvent tpHoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, Mappings.literalText("Click to teleport").formatted(Formatting.GREEN));
                         Text coordsText = Text.literal(coords).formatted(Formatting.GOLD).styled(style -> style.withClickEvent(tpClickEvent).withHoverEvent(tpHoverEvent));
+                        Text distText = Mappings.literalText("");
+                        if(context.getSource().isExecutedByPlayer()) {
+                            distText = Mappings.literalText(" (" + Math.round(target.getPos().distanceTo(context.getSource().getPlayerOrThrow().getPos())) + "m away)").formatted(Formatting.GREEN);
+                        }
 
-                        Mappings.sendFeedback(context, Mappings.literalText("").append(target.getDisplayName()).append(" is at ").append(coordsText), false);
+                        Mappings.sendFeedback(context, Mappings.literalText("").append(target.getDisplayName()).append(" is at ").append(coordsText).append(distText), false);
                         Commands.finishedExecution(context, defaultEntry);
                         return 1;
                     })
