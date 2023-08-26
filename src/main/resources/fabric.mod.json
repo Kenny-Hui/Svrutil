@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.lx.svrutil.SvrUtil"
+      "com.lx862.svrutil.SvrUtil"
     ]
   },
   "mixins": [
@@ -30,8 +30,5 @@
     "fabricloader": ">=0.9",
     "fabric": "*",
     "minecraft": "${mc_version}"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
