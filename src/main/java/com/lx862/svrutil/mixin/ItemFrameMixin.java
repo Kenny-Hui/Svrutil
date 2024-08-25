@@ -5,6 +5,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,6 +40,13 @@ public abstract class ItemFrameMixin extends AbstractDecorationEntity {
                     cir.setReturnValue(false);
                 }
             #endif
+        }
+    }
+
+    @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+    public void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+        if(!player.getWorld().isClient() && !player.hasPermissionLevel(MainConfig.getMinItemFrameInteractOpLevel())) {
+            cir.setReturnValue(ActionResult.PASS);
         }
     }
 }

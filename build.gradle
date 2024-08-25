@@ -31,33 +31,6 @@ repositories {
 	// for more information about repositories.
 }
 
-task downloadOptimizedMod() {
-	doLast {
-		def outputPath = "run/mods/"
-
-		download {
-			src getModrinthDLURL("fabric", minecraft_version, "lazydfu")
-			dest outputPath + "dfu.jar"
-			overwrite true
-		}
-		download {
-			src getModrinthDLURL("fabric", minecraft_version, "ferrite-core")
-			dest outputPath + "ferrite-core.jar"
-			overwrite true
-		}
-		download {
-			src getModrinthDLURL("fabric", minecraft_version, "smoothboot-fabric")
-			dest outputPath + "smooth-boot.jar"
-			overwrite true
-		}
-		download {
-			src getModrinthDLURL("fabric", minecraft_version, "ksyxis")
-			dest outputPath + "ksyxis.jar"
-			overwrite true
-		}
-	}
-}
-
 dependencies {
 	// To change the versions see the gradle.properties file
 	annotationProcessor "systems.manifold:manifold-preprocessor:+"
@@ -144,16 +117,6 @@ static def getModrinthVersion(loader, minecraftVersion, projectId) {
 	for (def versionElement : versionsArray) {
 		if (versionElement["loaders"].contains(loader) && versionElement["game_versions"].contains(minecraftVersion)) {
 			return versionElement["version_number"]
-		}
-	}
-	return ""
-}
-
-static def getModrinthDLURL(loader, minecraftVersion, projectId) {
-	def versionsArray = new JsonSlurper().parse(("https://api.modrinth.com/v2/project/" + projectId + "/version").toURL())
-	for (def versionElement : versionsArray) {
-		if (versionElement["loaders"].contains(loader) && versionElement["version_type"] == "release" && versionElement["game_versions"].contains(minecraftVersion)) {
-			return versionElement["files"][0]["url"].toURL()
 		}
 	}
 	return ""

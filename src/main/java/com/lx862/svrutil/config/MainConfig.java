@@ -16,6 +16,7 @@ public class MainConfig {
     private static final Path CONFIG_PATH = Config.getConfigPath("config.json");
     private static Text silentKickMessage = Mappings.literalText("Internal Exception: java.lang.StackOverflowError");
     private static boolean fixedItemFrame = false;
+    private static int minItemFrameInteractOpLevel = 0;
     private static int fallingBlockDelay = 2; // Vanilla takes 2 tick to fall
     public static Text whitelistedMessage = null;
     public static final List<JoinMessage> joinMessages = new ArrayList<>();
@@ -70,6 +71,10 @@ public class MainConfig {
                 fixedItemFrame = jsonConfig.get("fixedItemFrame").getAsBoolean();
             }
 
+            if(jsonConfig.has("minItemFrameInteractOpLevel")) {
+                minItemFrameInteractOpLevel = jsonConfig.get("minItemFrameInteractOpLevel").getAsInt();
+            }
+
             if(jsonConfig.has("fallingBlockDelay")) {
                 fallingBlockDelay = jsonConfig.get("fallingBlockDelay").getAsInt();
             }
@@ -90,6 +95,7 @@ public class MainConfig {
         welcomeConfig.add(welcomeConfig1);
         jsonConfig.addProperty("fallingBlockDelay", fallingBlockDelay);
         jsonConfig.addProperty("fixedItemFrame", fixedItemFrame);
+        jsonConfig.addProperty("minItemFrameInteractOpLevel", minItemFrameInteractOpLevel);
         jsonConfig.addProperty("whitelistedMessage", "You are not whitelisted on the server!");
         jsonConfig.addProperty("silentKickMessage", "Internal Exception: java.lang.StackOverflowError");
         jsonConfig.add("joinMessages", welcomeConfig);
@@ -106,6 +112,9 @@ public class MainConfig {
     }
     public static boolean getFixedItemFrame() {
         return fixedItemFrame;
+    }
+    public static int getMinItemFrameInteractOpLevel() {
+        return minItemFrameInteractOpLevel;
     }
 
     public static Text getSilentKickMessage() {

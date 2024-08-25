@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.lx862.svrutil.mixin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "FallingBlockMixin",
     "ItemFrameMixin",
