@@ -13,6 +13,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
+import static com.lx862.svrutil.Mappings.sendFeedback;
+
 public class spawn {
     private static final CommandEntry defaultEntry = new CommandEntry("spawn", 0, true);
 
@@ -39,7 +41,7 @@ public class spawn {
         }
 
         player.requestTeleportAndDismount(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
-        context.getSource().sendFeedback(Mappings.literalText("Teleported back to spawn.").formatted(Formatting.GREEN), false);
+        sendFeedback(context, Mappings.literalText("Teleported back to spawn.").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }
