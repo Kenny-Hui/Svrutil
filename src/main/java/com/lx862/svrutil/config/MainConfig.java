@@ -18,6 +18,8 @@ public class MainConfig {
     private static boolean fixedItemFrame = false;
     private static int minItemFrameInteractOpLevel = 0;
     private static int fallingBlockDelay = 2; // Vanilla takes 2 tick to fall
+    private static int minHunger = 0;
+    private static int maxHunger = 20;
     public static Text whitelistedMessage = null;
     public static final List<JoinMessage> joinMessages = new ArrayList<>();
 
@@ -78,6 +80,14 @@ public class MainConfig {
             if(jsonConfig.has("fallingBlockDelay")) {
                 fallingBlockDelay = jsonConfig.get("fallingBlockDelay").getAsInt();
             }
+
+            if(jsonConfig.has("minHunger")) {
+                minHunger = jsonConfig.get("minHunger").getAsInt();
+            }
+
+            if(jsonConfig.has("maxHunger")) {
+                maxHunger = jsonConfig.get("maxHunger").getAsInt();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             generate();
@@ -115,6 +125,14 @@ public class MainConfig {
     }
     public static int getMinItemFrameInteractOpLevel() {
         return minItemFrameInteractOpLevel;
+    }
+
+    public static int getMinHunger() {
+        return minHunger;
+    }
+
+    public static int getMaxHunger() {
+        return maxHunger;
     }
 
     public static Text getSilentKickMessage() {
