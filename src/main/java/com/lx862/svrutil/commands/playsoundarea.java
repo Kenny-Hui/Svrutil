@@ -44,7 +44,7 @@ public class playsoundarea {
         Identifier sound = IdentifierArgumentType.getIdentifier(context, "sound");
 
         for (ServerPlayerEntity players : playersInRange) {
-            Mappings.sendPlaySoundIdS2CPacket(players.getWorld(), players, sound, SoundCategory.MASTER, players.getPos(), volume, 1);
+            Mappings.sendPlaySoundIdS2CPacket(players.getWorld(), players, sound, SoundCategory.MASTER, players.getPos(), volume, pitch);
         }
         return 1;
     }
