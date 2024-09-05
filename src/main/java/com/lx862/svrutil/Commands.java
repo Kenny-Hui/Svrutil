@@ -24,6 +24,7 @@ public class Commands {
         gms.register(dispatcher);
         gmsp.register(dispatcher);
         heal.register(dispatcher);
+        playsoundarea.register(dispatcher);
         rootCommand.register(dispatcher);
         lightblock.register(dispatcher);
         msg.register(dispatcher);
