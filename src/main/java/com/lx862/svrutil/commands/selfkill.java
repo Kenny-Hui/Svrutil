@@ -22,7 +22,8 @@ public class selfkill {
                 .executes(context -> {
                     ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
                     player.kill();
-                    Mappings.broadcast(context.getSource().getServer().getPlayerManager(), player, Mappings.literalText(player.getDisplayName().getString() + " took their own life.").formatted(Formatting.RED));
+
+                    context.getSource().getServer().getPlayerManager().broadcast(Mappings.literalText(player.getDisplayName().getString() + " took their own life.").formatted(Formatting.RED), false);
                     Commands.finishedExecution(context, defaultEntry);
                     return 1;
                 })
