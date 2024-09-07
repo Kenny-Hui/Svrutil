@@ -8,10 +8,6 @@ on: [pull_request, push]
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        minecraft: [ "1.19.2", "1.19.3", "1.19.4", "1.20" ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,9 +22,9 @@ jobs:
       - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew build -PbuildVersion="${{ matrix.minecraft }}"
+        run: ./gradlew build
       - name: Capture build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Artifacts for ${{ matrix.minecraft }}
+          name: Artifacts
           path: build/libs/
