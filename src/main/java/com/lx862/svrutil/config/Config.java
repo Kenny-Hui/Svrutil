@@ -1,6 +1,5 @@
 package com.lx862.svrutil.config;
 
-import com.lx862.svrutil.transition.TransitionConfig;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.nio.file.Path;
@@ -24,10 +23,6 @@ public class Config {
         List<String> error = new ArrayList<>();
         if(!MainConfig.load()) {
             error.add("Main Config");
-        }
-
-        if(!TransitionConfig.load()) {
-            error.add("Transition Config");
         }
 
         if(!CommandConfig.load()) {

@@ -22,10 +22,6 @@ public class Mappings {
         return Text.literal(content);
     }
 
-    public static void registerCommand(Consumer<CommandDispatcher<ServerCommandSource>> callback) {
-        net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register((dispatcher, dedicated, third) -> callback.accept(dispatcher));
-    }
-
     public static void sendPlaySoundIdS2CPacket(World world, ServerPlayerEntity player, Identifier sound, SoundCategory soundCategory, Vec3d pos, float volume, float pitch) {
         player.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket(sound, soundCategory, pos, volume, 1, world.getRandom().nextLong()));
     }

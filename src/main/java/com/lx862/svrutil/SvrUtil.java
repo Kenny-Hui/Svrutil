@@ -1,11 +1,10 @@
 package com.lx862.svrutil;
 
 import com.lx862.svrutil.config.Config;
-import com.lx862.svrutil.transition.TransitionManager;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,19 +20,12 @@ public class SvrUtil implements ModInitializer {
     public void onInitialize() {
         String motd = motds[(int)(System.currentTimeMillis() % motds.length)];
         LOGGER.info("[{}] {}", ModInfo.MOD_NAME, motd);
-
         Config.loadAll();
-
-        // WIP Feature
-        if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            TransitionManager.initialize();
-        }
-
-        Mappings.registerCommand(Commands::register);
 
         /* Register Fabric API Events */
         ServerPlayConnectionEvents.JOIN.register(Events::onJoin);
         ServerTickEvents.START_SERVER_TICK.register(Events::onServerTick);
         ServerTickEvents.END_SERVER_TICK.register(Events::onTickEnd);
+        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated, third) -> Commands.register(dispatcher));
     }
 }
