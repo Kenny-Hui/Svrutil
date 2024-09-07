@@ -36,7 +36,6 @@ public class Commands {
         spd.register(dispatcher);
         spectate.register(dispatcher);
         silentTp.register(dispatcher);
-        silentKick.register(dispatcher);
         theend.register(dispatcher);
         unspectate.register(dispatcher);
         where.register(dispatcher);
