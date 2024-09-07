@@ -14,13 +14,13 @@ public class Events {
     }
 
     public static void onTickEnd(MinecraftServer server) {
-        server.getPlayerManager().getPlayerList().forEach(player -> {
-            if(player.getHungerManager().getFoodLevel() < MainConfig.getMinHunger()) {
-                player.getHungerManager().setFoodLevel(MainConfig.getMinHunger());
-            } else if(player.getHungerManager().getFoodLevel() > MainConfig.getMaxHunger()) {
-                player.getHungerManager().setFoodLevel(MainConfig.getMaxHunger());
+        for(FeatureSet featureSet : FeatureSet.values()) {
+            if(featureSet.feature.enabled) {
+                featureSet.feature.onTick(server);
             }
+        }
 
+        server.getPlayerManager().getPlayerList().forEach(player -> {
             // Sync fake time to client
             if(server.getTicks() % 20 == 0) {
                 if (SvrUtil.fakeTimeList.containsKey(player.getUuid())) {

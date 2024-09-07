@@ -1,7 +1,8 @@
 package com.lx862.svrutil.feature;
 
 public enum FeatureSet {
-    JoinMessage(new JoinMessageFeature());
+    JOIN_MESSAGE(new JoinMessageFeature()),
+    HUNGER(new HungerFeature());
 
     public final Feature feature;
 

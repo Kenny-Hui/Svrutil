@@ -25,8 +25,9 @@ public abstract class Feature {
         return jsonObject;
     }
 
-    public void onTick() {
+    public void onTick(MinecraftServer server) {
     }
+
     public void onPlayerJoin(ServerPlayNetworkHandler dispatcher, PacketSender sender, MinecraftServer server) {
     }
 }
