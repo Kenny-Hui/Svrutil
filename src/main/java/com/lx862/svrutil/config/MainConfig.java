@@ -21,7 +21,6 @@ public class MainConfig {
     private static int minHunger = 0;
     private static int maxHunger = 20;
     public static Text whitelistedMessage = null;
-    public static final List<JoinMessage> joinMessages = new ArrayList<>();
 
     public static boolean load() {
         if(!Files.exists(CONFIG_PATH)) {
@@ -32,17 +31,8 @@ public class MainConfig {
         }
 
         SvrUtil.LOGGER.info("[{}] Reading config...", ModInfo.MOD_NAME);
-        joinMessages.clear();
         try {
             final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH))).getAsJsonObject();
-
-            if(jsonConfig.has("joinMessages")) {
-                jsonConfig.getAsJsonArray("joinMessages").forEach(e -> {
-                    JsonObject jsonObject = e.getAsJsonObject();
-                    joinMessages.add(JoinMessage.fromJson(jsonObject));
-                });
-            }
-
             if(jsonConfig.has("whitelistedMessage")) {
                 JsonElement element = jsonConfig.get("whitelistedMessage");
                 try {

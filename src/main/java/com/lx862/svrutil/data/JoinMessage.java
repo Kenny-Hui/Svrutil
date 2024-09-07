@@ -2,8 +2,6 @@ package com.lx862.svrutil.data;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.lx862.svrutil.Util;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -22,12 +20,6 @@ public class JoinMessage {
         this.joinMessage = joinMessage;
         this.delayTick = delayTick;
         this.permLevel = permLevel;
-    }
-
-    public void show(ServerPlayerEntity player) {
-        if(!permLevel.isEmpty() && !permLevel.contains(Util.getPermLevel(player))) return;
-
-        Util.showWelcomeMessage(player, this);
     }
 
     public static JoinMessage fromJson(JsonObject jsonObject) {

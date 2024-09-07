@@ -31,15 +31,9 @@ public abstract class ItemFrameMixin extends AbstractDecorationEntity {
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if(MainConfig.getFixedItemFrame()) {
-            #if MC_VERSION >= "11904"
-                if(source.isIn(net.minecraft.registry.tag.DamageTypeTags.IS_EXPLOSION)) {
-                    cir.setReturnValue(false);
-                }
-            #else
-                if(source.isExplosive() || source.isProjectile()) {
-                    cir.setReturnValue(false);
-                }
-            #endif
+            if(source.isExplosive() || source.isProjectile()) {
+                cir.setReturnValue(false);
+            }
         }
     }
 

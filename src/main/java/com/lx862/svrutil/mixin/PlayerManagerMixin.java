@@ -3,22 +3,13 @@ package com.lx862.svrutil.mixin;
 import com.lx862.svrutil.SvrUtil;
 import com.lx862.svrutil.config.MainConfig;
 import com.mojang.authlib.GameProfile;
-#if MC_VERSION >= "11904"
-import net.minecraft.network.packet.Packet;
-#else
 import net.minecraft.network.Packet;
-#endif
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-
-#if MC_VERSION > "11902"
-    import net.minecraft.registry.RegistryKey;
-#else
-    import net.minecraft.util.registry.RegistryKey;
-#endif
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
