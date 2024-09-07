@@ -3,7 +3,6 @@ package com.lx862.svrutil.feature;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lx862.svrutil.TickManager;
-import com.lx862.svrutil.Util;
 import com.lx862.svrutil.data.JoinMessage;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
@@ -50,7 +49,7 @@ public class JoinMessageFeature extends Feature {
         ServerPlayerEntity player = dispatcher.getPlayer();
         
         for(JoinMessage joinMessage : joinMessages) {
-            if(!joinMessage.permLevel.isEmpty() && !joinMessage.permLevel.contains(Util.getPermLevel(player))) return;
+            if(!joinMessage.permLevel.isEmpty() && !joinMessage.permLevel.contains(server.getPermissionLevel(player.getGameProfile()))) return;
 
             TickManager.schedule(joinMessage.delayTick, () -> {
                 if(joinMessage.joinMessage != null) player.sendMessage(joinMessage.joinMessage, false);

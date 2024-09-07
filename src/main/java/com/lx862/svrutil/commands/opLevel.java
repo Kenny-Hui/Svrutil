@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Util;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -24,7 +23,7 @@ public class opLevel {
                 .then(CommandManager.argument("target", EntityArgumentType.player())
                 .executes(context -> {
                     ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-                    int level = Util.getPermLevel(target);
+                    int level = context.getSource().getServer().getPermissionLevel(target.getGameProfile());
 
                     String levelString;
                     if(level == 0) {
