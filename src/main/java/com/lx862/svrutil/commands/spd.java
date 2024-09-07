@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
@@ -14,6 +13,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.UUID;
@@ -44,7 +44,7 @@ public class spd {
         if(speedFactor == null) {
             entityAttributeInstance.removeModifier(walkSpeedUUID);
             player.getAbilities().setFlySpeed(DEFAULT_FLY_SPEED);
-            Mappings.sendFeedback(context, Mappings.literalText("Walking and flying speed has been reset").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(Text.literal("Walking and flying speed has been reset").formatted(Formatting.GREEN), false);
         } else {
             EntityAttributeModifier entityAttributeModifier = new EntityAttributeModifier(walkSpeedUUID, ModInfo.MOD_NAME + " Speed Modifier", speedFactor, EntityAttributeModifier.Operation.MULTIPLY_BASE);
             player.getAbilities().setFlySpeed((float)(DEFAULT_FLY_SPEED * speedFactor));
@@ -54,7 +54,7 @@ public class spd {
             }
 
             entityAttributeInstance.addTemporaryModifier(entityAttributeModifier);
-            Mappings.sendFeedback(context, Mappings.literalText("Walking and flying speed set to " + speedFactor + "x").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(Text.literal("Walking and flying speed set to " + speedFactor + "x").formatted(Formatting.GREEN), false);
         }
 
         player.sendAbilitiesUpdate();

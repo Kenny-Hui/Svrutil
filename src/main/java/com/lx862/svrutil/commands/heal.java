@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -10,6 +9,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class heal {
@@ -32,7 +32,7 @@ public class heal {
         target.setHealth(20);
         target.getHungerManager().setFoodLevel(20);
         target.getHungerManager().setSaturationLevel(20);
-        target.sendMessage(Mappings.literalText("Healed!").formatted(Formatting.GREEN), false);
+        target.sendMessage(Text.literal("Healed!").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }

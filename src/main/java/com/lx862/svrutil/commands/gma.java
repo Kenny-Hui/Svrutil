@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -22,9 +21,9 @@ public class gma {
         dispatcher.register(CommandManager.literal(entry.commandName)
                 .requires(ctx -> ctx.hasPermissionLevel(entry.permLevel))
                 .executes(context -> {
-                    Text gamemodeText = Mappings.literalText("Adventure").formatted(Formatting.GOLD);
+                    Text gamemodeText = Text.literal("Adventure").formatted(Formatting.GOLD);
                     context.getSource().getPlayerOrThrow().changeGameMode(GameMode.ADVENTURE);
-                    context.getSource().getPlayerOrThrow().sendMessage(Mappings.literalText("Gamemode: ").append(gamemodeText), false);
+                    context.getSource().getPlayerOrThrow().sendMessage(Text.literal("Gamemode: ").append(gamemodeText), false);
                     Commands.finishedExecution(context, defaultEntry);
                     return 1;
                 }));

@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.lx862.svrutil.SvrUtil;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.data.CommandEntry;
+import com.lx862.svrutil.data.SvrUtilLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Files;
@@ -16,13 +17,13 @@ public class CommandConfig {
 
     public static boolean load() {
         if(!Files.exists(CONFIG_PATH)) {
-            SvrUtil.LOGGER.warn("[{}] Command config file not found, generating one...", ModInfo.MOD_NAME);
+            SvrUtilLogger.debug("Command config file not found, generating one...");
             generate();
             load();
             return true;
         }
 
-        SvrUtil.LOGGER.info("[{}] Reading Command config...", ModInfo.MOD_NAME);
+        SvrUtilLogger.info("Reading Command config...");
         commandEntries.clear();
         try {
             final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH))).getAsJsonObject();
@@ -46,7 +47,7 @@ public class CommandConfig {
     }
 
     public static void generate() {
-        SvrUtil.LOGGER.info("[{}] Generating command config...", ModInfo.MOD_NAME);
+        SvrUtilLogger.info("Generating command config...");
         final JsonObject jsonConfig = new JsonObject();
         jsonConfig.addProperty("_COMMENT_1", "This config is used to define what commands are enabled/disabled, it's required permission level to use those commands and such");
         jsonConfig.addProperty("_COMMENT_2", "Unless you are not satisfied with the current command configuration, you don't need to modify this file.");

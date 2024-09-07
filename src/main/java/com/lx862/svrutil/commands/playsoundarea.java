@@ -1,6 +1,5 @@
 package com.lx862.svrutil.commands;
 
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -9,6 +8,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.command.suggestion.SuggestionProviders;
+import net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -43,8 +43,8 @@ public class playsoundarea {
         List<ServerPlayerEntity> playersInRange = context.getSource().getWorld().getEntitiesByClass(ServerPlayerEntity.class, AABB, e -> true);
         Identifier sound = IdentifierArgumentType.getIdentifier(context, "sound");
 
-        for (ServerPlayerEntity players : playersInRange) {
-            Mappings.sendPlaySoundIdS2CPacket(players.getWorld(), players, sound, SoundCategory.MASTER, players.getPos(), volume, pitch);
+        for (ServerPlayerEntity player : playersInRange) {
+            player.networkHandler.sendPacket(new PlaySoundIdS2CPacket(sound, SoundCategory.MASTER, player.getPos(), volume, pitch, player.getWorld().getRandom().nextLong()));
         }
         return 1;
     }

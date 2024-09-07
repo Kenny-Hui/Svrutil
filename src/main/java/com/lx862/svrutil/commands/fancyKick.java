@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -31,7 +30,7 @@ public class fancyKick {
 
                                 for(ServerPlayerEntity player : targets) {
                                     player.networkHandler.disconnect(text);
-                                    Mappings.sendFeedback(context, Text.translatable("commands.kick.success", player.getDisplayName(), text), true);
+                                    context.getSource().sendFeedback(Text.translatable("commands.kick.success", player.getDisplayName(), text), true);
                                 }
 
                                 Commands.finishedExecution(context, defaultEntry);

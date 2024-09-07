@@ -11,7 +11,7 @@ public class TickManager {
     private static final List<Runnable> tickSubscriber = new ArrayList<>();
 
     /**
-     * Schedule a runnable to be called after X Minecrft tick has elapsed since this call
+     * Schedule a runnable to be called after X Minecraft tick has elapsed since this call
      * @param ticksAfter The tick to wait
      * @param callback The callback to your method that does the thing after ticksAfter tick.
      */

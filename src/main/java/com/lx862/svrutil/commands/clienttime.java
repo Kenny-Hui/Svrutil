@@ -2,7 +2,6 @@ package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
 import com.lx862.svrutil.SvrUtil;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -13,6 +12,7 @@ import net.minecraft.command.argument.TimeArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.UUID;
@@ -52,10 +52,10 @@ public class clienttime {
         UUID playerUuid = player.getUuid();
         if(reset) {
             SvrUtil.fakeTimeList.remove(playerUuid);
-            Mappings.sendFeedback(context, Mappings.literalText("Client time has been reset.").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(Text.literal("Client time has been reset.").formatted(Formatting.GREEN), false);
         } else {
             SvrUtil.fakeTimeList.put(playerUuid, (long)time);
-            Mappings.sendFeedback(context, Mappings.literalText("Client time set to " + time).formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(Text.literal("Client time set to " + time).formatted(Formatting.GREEN), false);
         }
         Commands.finishedExecution(context, defaultEntry);
         return 1;

@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -40,7 +39,7 @@ public class afk {
         if(player == null) return 1;
         Text playerName = player.getDisplayName();
 
-        MutableText finalMessage = Mappings.literalText("* ").append(playerName);
+        MutableText finalMessage = Text.literal("* ").append(playerName);
         if(afkList.containsKey(player.getUuid())) {
             finalMessage = finalMessage.append(" is no longer AFK");
             afkList.remove(player.getUuid());

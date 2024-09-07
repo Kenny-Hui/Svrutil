@@ -2,7 +2,7 @@ package com.lx862.svrutil.config;
 
 import com.google.gson.*;
 import com.lx862.svrutil.ModInfo;
-import com.lx862.svrutil.SvrUtil;
+import com.lx862.svrutil.data.SvrUtilLogger;
 import net.minecraft.text.Text;
 
 import java.nio.file.Files;
@@ -18,13 +18,13 @@ public class MainConfig {
 
     public static boolean load() {
         if(!Files.exists(CONFIG_PATH)) {
-            SvrUtil.LOGGER.warn("[{}] Config file not found, generating one...", ModInfo.MOD_NAME);
+            SvrUtilLogger.info("Config file not found, generating one...");
             generate();
             load();
             return true;
         }
 
-        SvrUtil.LOGGER.info("[{}] Reading config...", ModInfo.MOD_NAME);
+        SvrUtilLogger.info("Reading config...");
         try {
             final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH))).getAsJsonObject();
             if(jsonConfig.has("whitelistedMessage")) {
@@ -61,7 +61,7 @@ public class MainConfig {
     }
 
     public static void generate() {
-        SvrUtil.LOGGER.info("[{}] Generating config...", ModInfo.MOD_NAME);
+        SvrUtilLogger.info("[{}] Generating config...", ModInfo.MOD_NAME);
         final JsonObject jsonConfig = new JsonObject();
         jsonConfig.addProperty("fallingBlockDelay", fallingBlockDelay);
         jsonConfig.addProperty("fixedItemFrame", fixedItemFrame);

@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -11,6 +10,7 @@ import net.minecraft.network.packet.s2c.play.SetCameraEntityS2CPacket;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class unspectate {
@@ -34,7 +34,7 @@ public class unspectate {
 
     private static int execute(CommandContext<ServerCommandSource> context, ServerPlayerEntity player) {
         player.networkHandler.sendPacket(new SetCameraEntityS2CPacket(player));
-        Mappings.sendFeedback(context, Mappings.literalText("Removed spectate effect.").formatted(Formatting.GREEN), false);
+        context.getSource().sendFeedback(Text.literal("Removed spectate effect.").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }

@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -12,6 +11,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
@@ -57,7 +57,7 @@ public class clientweather {
 
         if(isReset) {
             resetWeather(player, world);
-            player.sendMessage(Mappings.literalText("Client weather reset, now following server's weather.").formatted(Formatting.GREEN), false);
+            player.sendMessage(Text.literal("Client weather reset, now following server's weather.").formatted(Formatting.GREEN), false);
         } else {
             if(isRaining) {
                 player.networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.RAIN_STOPPED, 1));
@@ -75,8 +75,8 @@ public class clientweather {
                 player.networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.THUNDER_GRADIENT_CHANGED, 0));
             }
 
-            player.sendMessage(Mappings.literalText("Weather changed.").formatted(Formatting.GREEN), false);
-            player.sendMessage(Mappings.literalText("Note: You will have to re-run this command again if the weather of the server changes.").formatted(Formatting.GREEN), false);
+            player.sendMessage(Text.literal("Weather changed.").formatted(Formatting.GREEN), false);
+            player.sendMessage(Text.literal("Note: You will have to re-run this command again if the weather of the server changes.").formatted(Formatting.GREEN), false);
         }
 
         Commands.finishedExecution(context, defaultEntry);

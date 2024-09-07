@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -10,10 +9,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
-
-import static com.lx862.svrutil.Mappings.sendFeedback;
 
 public class spawn {
     private static final CommandEntry defaultEntry = new CommandEntry("spawn", 0, true);
@@ -41,7 +39,7 @@ public class spawn {
         }
 
         player.requestTeleportAndDismount(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
-        sendFeedback(context, Mappings.literalText("Teleported back to spawn.").formatted(Formatting.GREEN), false);
+        context.getSource().sendFeedback(Text.literal("Teleported back to spawn.").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }

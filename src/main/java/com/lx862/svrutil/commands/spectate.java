@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
@@ -12,6 +11,7 @@ import net.minecraft.network.packet.s2c.play.SetCameraEntityS2CPacket;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class spectate {
@@ -45,7 +45,7 @@ public class spectate {
 
     private static int execute(CommandContext<ServerCommandSource> context, ServerPlayerEntity player, Entity target) {
         player.networkHandler.sendPacket(new SetCameraEntityS2CPacket(target));
-        Mappings.sendFeedback(context, Mappings.literalText("Now spectating ").append(target.getDisplayName()).formatted(Formatting.GREEN), false);
+        context.getSource().sendFeedback(Text.literal("Now spectating ").append(target.getDisplayName()).formatted(Formatting.GREEN), false);
         return 1;
     }
 }

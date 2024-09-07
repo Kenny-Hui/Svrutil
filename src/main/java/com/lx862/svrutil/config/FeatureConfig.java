@@ -1,8 +1,7 @@
 package com.lx862.svrutil.config;
 
 import com.google.gson.*;
-import com.lx862.svrutil.ModInfo;
-import com.lx862.svrutil.SvrUtil;
+import com.lx862.svrutil.data.SvrUtilLogger;
 import com.lx862.svrutil.feature.FeatureSet;
 
 import java.nio.file.Files;
@@ -13,7 +12,7 @@ public class FeatureConfig {
     private static final Path CONFIG_PATH = Config.getConfigPath("feature.json");
 
     public static boolean load() {
-        SvrUtil.LOGGER.info("[{}] Reading feature config...", ModInfo.MOD_NAME);
+        SvrUtilLogger.info("Reading feature config...");
 
         try {
             boolean needWriteConfig = false;
@@ -36,7 +35,7 @@ public class FeatureConfig {
             }
 
             if(needWriteConfig) {
-                SvrUtil.LOGGER.info("[Svrutil] Feature config file changed, writing to disk...");
+                SvrUtilLogger.info("Feature config file changed, writing to disk...");
                 Files.write(CONFIG_PATH, Collections.singleton(new GsonBuilder().setPrettyPrinting().create().toJson(jsonConfig)));
             }
         } catch (Exception e) {

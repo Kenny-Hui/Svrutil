@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.Util;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
@@ -10,6 +9,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class opLevel {
@@ -33,7 +33,7 @@ public class opLevel {
                         levelString = String.valueOf(level);
                     }
 
-                    Mappings.sendFeedback(context, Mappings.literalText("Target have OP level " + levelString).formatted(Formatting.GOLD), false);
+                    context.getSource().sendFeedback(Text.literal("Target have OP level " + levelString).formatted(Formatting.GOLD), false);
                     Commands.finishedExecution(context, defaultEntry);
                     return 1;
                 }))

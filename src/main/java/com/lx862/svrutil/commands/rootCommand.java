@@ -4,7 +4,6 @@ import com.lx862.svrutil.Commands;
 import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.config.Config;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -12,6 +11,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.ClickEvent;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
@@ -42,25 +42,25 @@ public class rootCommand {
             e.printStackTrace();
         }
 
-        Mappings.sendFeedback(context, Mappings.literalText(ModInfo.MOD_NAME).formatted(Formatting.GOLD), false);
-        Mappings.sendFeedback(context, Mappings.literalText("Version " + ModInfo.getVersion()), false);
+        context.getSource().sendFeedback(Text.literal(ModInfo.MOD_NAME).formatted(Formatting.GOLD), false);
+        context.getSource().sendFeedback(Text.literal("Version " + ModInfo.getVersion()), false);
         if(homepageUrl != null) {
             final ClickEvent openHomepageEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, homepageUrl);
-            Mappings.sendFeedback(context, Mappings.literalText(homepageUrl).styled(style -> style.withClickEvent(openHomepageEvent)).formatted(Formatting.UNDERLINE).formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(Text.literal(homepageUrl).styled(style -> style.withClickEvent(openHomepageEvent)).formatted(Formatting.UNDERLINE).formatted(Formatting.GREEN), false);
         }
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }
 
     private static int executeReload(CommandContext<ServerCommandSource> context) {
-        Mappings.sendFeedback(context, Mappings.literalText("Reloading Config...").formatted(Formatting.GOLD), false);
+        context.getSource().sendFeedback(Text.literal("Reloading Config...").formatted(Formatting.GOLD), false);
         List<String> error = Config.loadAll();
         if(!error.isEmpty()) {
             String failed = String.join(",", error);
-            Mappings.sendFeedback(context, Mappings.literalText("Config Reloaded. " + failed + " failed to load.").formatted(Formatting.RED), false);
-            Mappings.sendFeedback(context, Mappings.literalText("Please check whether the JSON syntax is correct!").formatted(Formatting.RED), false);
+            context.getSource().sendFeedback(Text.literal("Config Reloaded. " + failed + " failed to load.").formatted(Formatting.RED), false);
+            context.getSource().sendFeedback(Text.literal("Please check whether the JSON syntax is correct!").formatted(Formatting.RED), false);
         } else {
-            Mappings.sendFeedback(context, Mappings.literalText(ModInfo.MOD_NAME + " Config Reloaded!").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(Text.literal(ModInfo.MOD_NAME + " Config Reloaded!").formatted(Formatting.GREEN), false);
         }
         Commands.finishedExecution(context, defaultEntry);
         return 1;

@@ -1,7 +1,6 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.Mappings;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.lx862.svrutil.SvrUtil;
@@ -12,6 +11,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class r {
@@ -28,18 +28,18 @@ public class r {
                             String player = context.getSource().getName();
                             ServerPlayerEntity target = context.getSource().getServer().getPlayerManager().getPlayer(SvrUtil.lastReply.get(player));
                             if (target == null) {
-                                Mappings.sendFeedback(context, Mappings.literalText("Either no one have replied to you, or the player is offline.").formatted(Formatting.GRAY), false);
+                                context.getSource().sendFeedback(Text.literal("Either no one have replied to you, or the player is offline.").formatted(Formatting.GRAY), false);
                                 return 1;
                             }
 
                             if (context.getSource().getWorld().getPlayerByUuid(target.getUuid()) == null) {
-                                Mappings.sendFeedback(context, Mappings.literalText("The player you were messaging with are now offline").formatted(Formatting.RED), false);
+                                context.getSource().sendFeedback(Text.literal("The player you were messaging with are now offline").formatted(Formatting.RED), false);
                                 return 1;
                             }
 
                             String message = StringArgumentType.getString(context, "message");
-                            Mappings.sendFeedback(context, Mappings.literalText(String.format("§6[me §r-> §6%s]: §r%s", target.getGameProfile().getName(), message)), false);
-                            target.sendMessage(Mappings.literalText(String.format("§6[%s §r-> §6me]: §r%s", player, message)), false);
+                            context.getSource().sendFeedback(Text.literal(String.format("§6[me §r-> §6%s]: §r%s", target.getGameProfile().getName(), message)), false);
+                            target.sendMessage(Text.literal(String.format("§6[%s §r-> §6me]: §r%s", player, message)), false);
                             target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
                             SvrUtil.lastReply.put(target.getGameProfile().getName(), player);
                             Commands.finishedExecution(context, defaultEntry);
