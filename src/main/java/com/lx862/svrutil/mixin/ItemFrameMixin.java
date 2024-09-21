@@ -1,6 +1,7 @@
 package com.lx862.svrutil.mixin;
 
-import com.lx862.svrutil.config.MainConfig;
+import com.lx862.svrutil.feature.FeatureSet;
+import com.lx862.svrutil.feature.VanillaMechanicsFeature;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
@@ -23,14 +24,14 @@ public abstract class ItemFrameMixin extends AbstractDecorationEntity {
 
     @Inject(method = "canStayAttached", at = @At("HEAD"), cancellable = true)
     public void canStayAttached(CallbackInfoReturnable<Boolean> cir) {
-        if(MainConfig.getFixedItemFrame()) {
+        if(FeatureSet.VANILLA_MECHANICS.feature.enabled && ((VanillaMechanicsFeature) FeatureSet.VANILLA_MECHANICS.feature).getFixedItemFrame()) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if(MainConfig.getFixedItemFrame()) {
+        if(FeatureSet.VANILLA_MECHANICS.feature.enabled && ((VanillaMechanicsFeature) FeatureSet.VANILLA_MECHANICS.feature).getFixedItemFrame()) {
             if(source.isExplosive() || source.isProjectile()) {
                 cir.setReturnValue(false);
             }
@@ -39,8 +40,10 @@ public abstract class ItemFrameMixin extends AbstractDecorationEntity {
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     public void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if(!player.getWorld().isClient() && !player.hasPermissionLevel(MainConfig.getMinItemFrameInteractOpLevel())) {
-            cir.setReturnValue(ActionResult.PASS);
+        if(FeatureSet.VANILLA_MECHANICS.feature.enabled && !player.getWorld().isClient()) {
+            if(player.hasPermissionLevel(((VanillaMechanicsFeature) FeatureSet.VANILLA_MECHANICS.feature).getMinItemFrameInteractOpLevel())) {
+                cir.setReturnValue(ActionResult.PASS);
+            }
         }
     }
 }

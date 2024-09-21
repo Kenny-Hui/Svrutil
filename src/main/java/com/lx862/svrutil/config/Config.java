@@ -22,10 +22,6 @@ public class Config {
 
     public static List<String> loadAll() {
         List<String> error = new ArrayList<>();
-        if(!MainConfig.load()) {
-            error.add("Main Config");
-        }
-
         if(!CommandConfig.load()) {
             error.add("Command Config");
         }

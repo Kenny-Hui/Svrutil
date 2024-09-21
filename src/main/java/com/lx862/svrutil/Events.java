@@ -1,6 +1,5 @@
 package com.lx862.svrutil;
 
-import com.lx862.svrutil.config.MainConfig;
 import com.lx862.svrutil.feature.FeatureSet;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;

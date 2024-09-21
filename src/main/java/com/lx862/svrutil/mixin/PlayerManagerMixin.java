@@ -1,7 +1,9 @@
 package com.lx862.svrutil.mixin;
 
 import com.lx862.svrutil.SvrUtil;
-import com.lx862.svrutil.config.MainConfig;
+import com.lx862.svrutil.feature.CustomMessageFeature;
+import com.lx862.svrutil.feature.Feature;
+import com.lx862.svrutil.feature.FeatureSet;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
@@ -44,8 +46,10 @@ public class PlayerManagerMixin {
 
     @Inject(method = "checkCanJoin", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
     public void checkCanJoinWhitelist(SocketAddress address, GameProfile profile, CallbackInfoReturnable<Text> cir) {
-        if(MainConfig.whitelistedMessage != null) {
-            cir.setReturnValue(MainConfig.whitelistedMessage);
+        Feature featureSet = FeatureSet.CUSTOM_MESSAGE.feature;
+        Text whitelistedMessage = ((CustomMessageFeature)featureSet).getWhitelistedMessage();
+        if(featureSet.enabled && whitelistedMessage != null) {
+            cir.setReturnValue(whitelistedMessage);
             cir.cancel();
         }
     }
