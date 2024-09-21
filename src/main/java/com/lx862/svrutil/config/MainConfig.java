@@ -13,7 +13,6 @@ public class MainConfig {
     private static final Path CONFIG_PATH = Config.getConfigPath("config.json");
     private static boolean fixedItemFrame = false;
     private static int minItemFrameInteractOpLevel = 0;
-    private static int fallingBlockDelay = 2; // Vanilla takes 2 tick to fall
     public static Text whitelistedMessage = null;
 
     public static boolean load() {
@@ -47,10 +46,6 @@ public class MainConfig {
             if(jsonConfig.has("minItemFrameInteractOpLevel")) {
                 minItemFrameInteractOpLevel = jsonConfig.get("minItemFrameInteractOpLevel").getAsInt();
             }
-
-            if(jsonConfig.has("fallingBlockDelay")) {
-                fallingBlockDelay = jsonConfig.get("fallingBlockDelay").getAsInt();
-            }
         } catch (Exception e) {
             e.printStackTrace();
             generate();
@@ -63,7 +58,6 @@ public class MainConfig {
     public static void generate() {
         SvrUtilLogger.info("[{}] Generating config...", ModInfo.MOD_NAME);
         final JsonObject jsonConfig = new JsonObject();
-        jsonConfig.addProperty("fallingBlockDelay", fallingBlockDelay);
         jsonConfig.addProperty("fixedItemFrame", fixedItemFrame);
         jsonConfig.addProperty("minItemFrameInteractOpLevel", minItemFrameInteractOpLevel);
         jsonConfig.addProperty("whitelistedMessage", "You are not whitelisted on the server!");
@@ -75,9 +69,6 @@ public class MainConfig {
         }
     }
 
-    public static int getFallingBlockDelay() {
-        return fallingBlockDelay;
-    }
     public static boolean getFixedItemFrame() {
         return fixedItemFrame;
     }
