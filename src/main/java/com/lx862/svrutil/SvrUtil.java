@@ -11,7 +11,7 @@ import java.util.*;
 
 public class SvrUtil implements ModInitializer {
     public static final String[] motds = {"Have a great day!", "OwO What's this?", "made ya look", "Drink water!", "i use arch btw", "The mystery is of Wet and Dry. And where does the solution lie?", "Backup Regularly >.<", "I'll be back in a jiffy!", "Treasure everything before it's no longer there.", "3 Billion Devices runs Java!"};
-    public static final HashMap<String, String> lastReply = new HashMap<>();
+    public static final HashMap<String, Collection<String>> lastReply = new HashMap<>();
     public static final HashMap<UUID, Long> fakeTimeList = new HashMap<>();
 
     @Override

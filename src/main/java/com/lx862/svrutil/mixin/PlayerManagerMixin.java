@@ -1,7 +1,7 @@
 package com.lx862.svrutil.mixin;
 
 import com.lx862.svrutil.SvrUtil;
-import com.lx862.svrutil.feature.CustomMessageFeature;
+import com.lx862.svrutil.feature.TextOverrideFeature;
 import com.lx862.svrutil.feature.Feature;
 import com.lx862.svrutil.feature.FeatureSet;
 import com.mojang.authlib.GameProfile;
@@ -46,8 +46,8 @@ public class PlayerManagerMixin {
 
     @Inject(method = "checkCanJoin", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
     public void checkCanJoinWhitelist(SocketAddress address, GameProfile profile, CallbackInfoReturnable<Text> cir) {
-        Feature featureSet = FeatureSet.CUSTOM_MESSAGE.feature;
-        Text whitelistedMessage = ((CustomMessageFeature)featureSet).getWhitelistedMessage();
+        Feature featureSet = FeatureSet.TEXT_OVERRIDE.feature;
+        Text whitelistedMessage = ((TextOverrideFeature)featureSet).getWhitelistedMessage();
         if(featureSet.enabled && whitelistedMessage != null) {
             cir.setReturnValue(whitelistedMessage);
             cir.cancel();

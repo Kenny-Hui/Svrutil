@@ -4,11 +4,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.text.Text;
 
-public class CustomMessageFeature extends Feature {
+public class TextOverrideFeature extends Feature {
     private static Text whitelistedMessage = null;
 
-    public CustomMessageFeature() {
-        super("Custom Message", "custom_message");
+    public TextOverrideFeature() {
+        super("Text Override", "text_override");
     }
 
     @Override

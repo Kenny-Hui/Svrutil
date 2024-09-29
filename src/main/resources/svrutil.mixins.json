@@ -6,6 +6,7 @@
   "mixins": [
     "FallingBlockMixin",
     "ItemFrameMixin",
+    "MessageCommandMixin",
     "PlayerManagerMixin"
   ],
   "client": [

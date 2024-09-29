@@ -32,20 +32,20 @@ public class msg {
                 .then(CommandManager.argument("target", EntityArgumentType.player())
                         .then(CommandManager.argument("message", StringArgumentType.greedyString())
                                 .executes(context -> {
-                                    String playerName = context.getSource().getName();
-                                    ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-                                    String message = StringArgumentType.getString(context, "message");
-                                    context.getSource().sendFeedback(Text.literal(String.format("§6[me §r-> §6%s]: §r%s", target.getGameProfile().getName(), message)), false);
-                                    target.sendMessage(Text.literal(String.format("§6[%s §r-> §6me]: §r%s", playerName, message)), false);
-                                    SvrUtil.lastReply.put(target.getGameProfile().getName(), playerName);
-                                    SvrUtil.lastReply.put(playerName, target.getGameProfile().getName());
-                                    target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-
-                                    if(afk.afkList.containsKey(target.getUuid()) && context.getSource().isExecutedByPlayer()) {
-                                        context.getSource().getPlayer().sendMessageToClient(Text.literal("").append(target.getDisplayName()).append(" are AFK and may not be available at the moment.").formatted(Formatting.YELLOW), true);
-                                    }
-
-                                    Commands.finishedExecution(context, defaultEntry);
+//                                    String playerName = context.getSource().getName();
+//                                    ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+//                                    String message = StringArgumentType.getString(context, "message");
+//                                    context.getSource().sendFeedback(Text.literal(String.format("§6[me §r-> §6%s]: §r%s", target.getGameProfile().getName(), message)), false);
+//                                    target.sendMessage(Text.literal(String.format("§6[%s §r-> §6me]: §r%s", playerName, message)), false);
+//                                    SvrUtil.lastReply.put(target.getGameProfile().getName(), playerName);
+//                                    SvrUtil.lastReply.put(playerName, target.getGameProfile().getName());
+//                                    target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+//
+//                                    if(afk.afkList.containsKey(target.getUuid()) && context.getSource().isExecutedByPlayer()) {
+//                                        context.getSource().getPlayer().sendMessageToClient(Text.literal("").append(target.getDisplayName()).append(" are AFK and may not be available at the moment.").formatted(Formatting.YELLOW), true);
+//                                    }
+//
+//                                    Commands.finishedExecution(context, defaultEntry);
                                     return 1;
                                 }))
                 )

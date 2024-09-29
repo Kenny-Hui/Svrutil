@@ -26,7 +26,6 @@ public class Commands {
         playsoundarea.register(dispatcher);
         rootCommand.register(dispatcher);
         lightblock.register(dispatcher);
-        msg.register(dispatcher);
         opLevel.register(dispatcher);
         nether.register(dispatcher);
         overworld.register(dispatcher);
