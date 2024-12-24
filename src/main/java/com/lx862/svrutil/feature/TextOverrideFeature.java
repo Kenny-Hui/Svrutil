@@ -1,6 +1,7 @@
 package com.lx862.svrutil.feature;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import net.minecraft.text.Text;
 
@@ -31,7 +32,11 @@ public class TextOverrideFeature extends Feature {
     @Override
     public JsonObject writeConfig() {
         JsonObject jsonObject = super.writeConfig();
-        jsonObject.addProperty("whitelistedMessage", Text.Serializer.toJson(whitelistedMessage));
+        if(whitelistedMessage == null) {
+            jsonObject.add("whitelistedMessage", JsonNull.INSTANCE);
+        } else {
+            jsonObject.addProperty("whitelistedMessage", Text.Serializer.toJson(whitelistedMessage));
+        }
         return jsonObject;
     }
 

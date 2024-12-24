@@ -40,7 +40,7 @@ public abstract class ItemFrameMixin extends AbstractDecorationEntity {
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     public void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if(FeatureSet.VANILLA_MECHANICS.feature.enabled && !player.getWorld().isClient()) {
+        if(!player.getWorld().isClient() && FeatureSet.VANILLA_MECHANICS.feature.enabled) {
             if(player.hasPermissionLevel(((VanillaMechanicsFeature) FeatureSet.VANILLA_MECHANICS.feature).getMinItemFrameInteractOpLevel())) {
                 cir.setReturnValue(ActionResult.PASS);
             }

@@ -1,16 +1,43 @@
 # Config
 All config file are stored in the JSON format, and a default config file will be automatically generated if missing.
-## Main Config
-The config file are located in `Your Fabric Instance/config/svrutil/config.json`.
+## Feature Config
+The config file are located in `Your Fabric Instance/config/svrutil/feature.json`.
 
-| Key                                        | Description                                                                                                                                | Default Value                                      |
-|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
-| fallingBlockDelay                          | This sets the tick of when falling block like Sand and Gravel should start falling after placing.<br>-1 to disable falling block entirely. | 2 (Vanilla)                                        |
-| fixedItemFrame                             | Whether all item frames in the world should be fixed. (Does not get detached or affected by explosions)                                    | false                                              |
-| minItemFrameInteractOpLevel                | The minimum OP Level required to interact with item frames (Rotate/Place/Break) in the world.                                              | 0 (All)                                            |
-| silentKickMessage                          | The message sent to the player being kicked with the /silentkick command. (Minecraft RAW Text Format)                                      | "Internal Exception: java.lang.StackOverflowError" |
-| whitelistedMessage                         | The message sent to the player being kicked due to being whitelisted. (Minecraft RAW Text Format)                                          | null (Use vanilla default)                         |
-| joinMessages                               | An array of JSON Object representing a welcome message, see below.                                                                         | [...]                                              |
+### join_message
+This section describes a list of join message to show when player joined the server.
+
+#### Welcome Message Entry
+
+| Key          | Description                                                                              | Default Value                                      |
+|--------------|------------------------------------------------------------------------------------------|----------------------------------------------------|
+| title        | A Color-Text entry for the main title to appear at the center of the screen              | 2 (Vanilla)                                        |
+| subtitle     | A Color-Text entry for the subtitle to appear below title at the center of the screen    | false                                              |
+| message      | A Color-Text entry for the chat message to be sent.                                      | 0 (All)                                            |
+| delayTick    | How much Minecraft tick to delay before sending this welcome message to the player.      | "Internal Exception: java.lang.StackOverflowError" |
+| permLevels   | The OP level that this welcome message is sent to.                                       | [1, 2, 3, 4]                                       |
+
+#### Color-Text Entry
+| Key                         | Description                                                                                           |
+|-----------------------------|-------------------------------------------------------------------------------------------------------|
+| color                       | Human readable color name (i.e. "green")                                                              |
+| text                        | The text content to show                                                                              |
+
+### hunger
+This section enforces the hunger range for all players, at a scale from 0 to 20.
+
+| Key      | Description                                       |
+|----------|---------------------------------------------------|
+| minLevel | The minimum hunger level the player must stay at. |
+| maxLevel | The maximum hunger level the player must stay at. |
+
+### vanilla_mechanics
+This section contains configurations that overrides Vanilla Minecraft mechanics.
+
+| Key                         | Description                                                                                                |
+|-----------------------------|------------------------------------------------------------------------------------------------------------|
+| fixedItemFrame              | Whether all item frame in the world should be treated as fixed. (Same effect as {Fixed:1b} Entity NBT Tag) |
+| minItemFrameInteractOpLevel | The minimum OP Level required to be able to interact with item frame.                                      |
+| fallingBlockDelay           | How much tick it should take for falling block (i.e. Sand & Gravel) to start falling after placing.        |
 
 ### Welcome Message Object
 | Key        | Description                                                                                                                                       |

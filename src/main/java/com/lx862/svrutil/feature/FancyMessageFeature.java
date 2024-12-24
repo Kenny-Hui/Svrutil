@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 public class FancyMessageFeature extends Feature {
 
     public FancyMessageFeature() {
-        super("Fancy Message", "fancy_message");
+        super("Fancy Message", "fancy_msg");
     }
 
     @Override

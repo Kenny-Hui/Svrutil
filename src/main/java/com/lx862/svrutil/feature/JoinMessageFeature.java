@@ -20,7 +20,7 @@ public class JoinMessageFeature extends Feature {
     public final List<JoinMessage> joinMessages = new ArrayList<>();
 
     public JoinMessageFeature() {
-        super("Join Message", "joinMessage");
+        super("Join Message", "join_message");
         this.joinMessages.add(new JoinMessage(null, null, Text.literal("Please edit 'config/svrutil/feature.json' to change the welcome message. Thanks for installing Svrutil.").formatted(Formatting.AQUA), 60, List.of(1,2,3,4)));
     }
 
