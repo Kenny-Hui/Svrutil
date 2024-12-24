@@ -33,7 +33,7 @@ public class TextOverrideFeature extends Feature {
     public JsonObject writeConfig() {
         JsonObject jsonObject = super.writeConfig();
         if(whitelistedMessage == null) {
-            jsonObject.add("whitelistedMessage", JsonNull.INSTANCE);
+            jsonObject.addProperty("whitelistedMessage", "You are not whitelisted on the server.");
         } else {
             jsonObject.addProperty("whitelistedMessage", Text.Serializer.toJson(whitelistedMessage));
         }
