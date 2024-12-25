@@ -33,11 +33,11 @@ This section enforces the hunger range for all players, at a scale from 0 to 20.
 ### vanilla_mechanics
 This section contains configurations that overrides Vanilla Minecraft mechanics.
 
-| Key                         | Description                                                                                                |
-|-----------------------------|------------------------------------------------------------------------------------------------------------|
-| fixedItemFrame              | Whether all item frame in the world should be treated as fixed. (Same effect as {Fixed:1b} Entity NBT Tag) |
-| minItemFrameInteractOpLevel | The minimum OP Level required to be able to interact with item frame.                                      |
-| fallingBlockDelay           | How much tick it should take for falling block (i.e. Sand & Gravel) to start falling after placing.        |
+| Key                         | Description                                                                                         |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|
+| immutableItemFrame          | Whether all item frame in the world should be non-destructible by nature except by players.         |
+| minItemFrameInteractOpLevel | The minimum OP Level required to be able to interact with item frame.                               |
+| fallingBlockDelay           | How much tick it should take for falling block (i.e. Sand & Gravel) to start falling after placing. |
 
 ### Welcome Message Object
 | Key        | Description                                                                                                                                       |
