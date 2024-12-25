@@ -1,11 +1,10 @@
-import groovy.json.JsonSlurper
 plugins {
 	id 'fabric-loom' version '1.8-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 group = project.maven_group
 version = project.mod_version + "+" + project.minecraft_version
@@ -27,6 +26,7 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation include("eu.pb4:placeholder-api:${project.placeholder_api_version}")
 }
 
 processResources {
@@ -82,10 +82,9 @@ publishing {
 	allprojects {
 		repositories {
 			maven {
-				url = "https://minecraft.guntram.de/maven/"
+				url "https://maven.nucleoid.xyz/"
+				name "Nucleoid"
 			}
-			maven { url 'https://www.jitpack.io' }
-			maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 		}
 
 		afterEvaluate {

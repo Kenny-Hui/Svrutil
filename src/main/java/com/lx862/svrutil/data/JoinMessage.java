@@ -2,6 +2,7 @@ package com.lx862.svrutil.data;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import eu.pb4.placeholders.api.TextParserUtils;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ public class JoinMessage {
 
     public static JoinMessage fromJson(JsonObject jsonObject) {
         List<Integer> permLevels = new ArrayList<>();
-        Text title = jsonObject.has("title") ? Text.Serializer.fromJson(jsonObject.get("title")) : null;
-        Text subtitle = jsonObject.has("subtitle") ? Text.Serializer.fromJson(jsonObject.get("subtitle")) : null;
-        Text joinMessage = jsonObject.has("message") ? Text.Serializer.fromJson(jsonObject.get("message")) : null;
         int delayTick = jsonObject.has("delayTick") ? jsonObject.get("delayTick").getAsInt() : 0;
+        Text title = jsonObject.has("title") ? TextParserUtils.formatText(jsonObject.get("title").getAsString()) : null;
+        Text subtitle = jsonObject.has("subtitle") ? TextParserUtils.formatText(jsonObject.get("subtitle").getAsString()) : null;
+        Text joinMessage = jsonObject.has("message") ? TextParserUtils.formatText(jsonObject.get("message").getAsString()) : null;
 
         try {
             jsonObject.get("permLevels").getAsJsonArray().forEach(e -> {
@@ -45,9 +46,9 @@ public class JoinMessage {
         for(Integer i : joinMessage.permLevel) {
             permLevels.add(i);
         }
-        jsonObject.add("title", Text.Serializer.toJsonTree(joinMessage.title));
-        jsonObject.add("subtitle", Text.Serializer.toJsonTree(joinMessage.subtitle));
-        jsonObject.add("message", Text.Serializer.toJsonTree(joinMessage.joinMessage));
+        jsonObject.addProperty("title", "");
+        jsonObject.addProperty("subtitle", "");
+        jsonObject.addProperty("message", "<yellow>Please edit 'config/svrutil/feature.json' to change the welcome message. Thanks for installing Svrutil.</yellow>");
         jsonObject.addProperty("delayTick", joinMessage.delayTick);
         jsonObject.add("permLevels", permLevels);
         return jsonObject;

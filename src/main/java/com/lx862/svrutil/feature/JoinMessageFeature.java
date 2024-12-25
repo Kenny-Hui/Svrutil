@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lx862.svrutil.TickManager;
 import com.lx862.svrutil.data.JoinMessage;
+import eu.pb4.placeholders.api.PlaceholderContext;
+import eu.pb4.placeholders.api.Placeholders;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
@@ -34,8 +36,8 @@ public class JoinMessageFeature extends Feature {
     }
 
     @Override
-    public JsonObject writeConfig() {
-        JsonObject jsonObject = super.writeConfig();
+    public JsonObject generateConfig() {
+        JsonObject jsonObject = super.generateConfig();
         JsonArray entries = new JsonArray();
         for(JoinMessage joinMessage : joinMessages) {
             entries.add(JoinMessage.toJson(joinMessage));
@@ -50,11 +52,12 @@ public class JoinMessageFeature extends Feature {
         
         for(JoinMessage joinMessage : joinMessages) {
             if(!joinMessage.permLevel.isEmpty() && !joinMessage.permLevel.contains(server.getPermissionLevel(player.getGameProfile()))) return;
+            PlaceholderContext placeholderContext = new PlaceholderContext(server, server.getCommandSource(), player.getWorld(), player, player, player.getGameProfile());
 
             TickManager.schedule(joinMessage.delayTick, () -> {
-                if(joinMessage.joinMessage != null) player.sendMessage(joinMessage.joinMessage, false);
-                if(joinMessage.title != null) player.networkHandler.sendPacket(new TitleS2CPacket(joinMessage.title));
-                if(joinMessage.subtitle != null) player.networkHandler.sendPacket(new SubtitleS2CPacket(joinMessage.subtitle));
+                if(joinMessage.title != null) player.networkHandler.sendPacket(new TitleS2CPacket(Placeholders.parseText(joinMessage.title, placeholderContext)));
+                if(joinMessage.subtitle != null) player.networkHandler.sendPacket(new SubtitleS2CPacket(Placeholders.parseText(joinMessage.subtitle, placeholderContext)));
+                if(joinMessage.joinMessage != null) player.sendMessage(Placeholders.parseText(joinMessage.joinMessage, placeholderContext), false);
             });
         }
     }

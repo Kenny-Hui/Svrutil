@@ -30,7 +30,7 @@ public class FeatureConfig {
                     featureSet.feature.readConfig(jsonConfig.getAsJsonObject(configEntryName));
                 } else {
                     needWriteConfig = true;
-                    jsonConfig.add(configEntryName, featureSet.feature.writeConfig());
+                    jsonConfig.add(configEntryName, featureSet.feature.generateConfig());
                 }
             }
 

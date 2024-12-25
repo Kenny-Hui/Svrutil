@@ -19,7 +19,7 @@ public abstract class Feature {
         this.enabled = jsonObject.has("enabled") && jsonObject.get("enabled").getAsBoolean();
     }
 
-    public JsonObject writeConfig() {
+    public JsonObject generateConfig() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("enabled", enabled);
         return jsonObject;

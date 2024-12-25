@@ -1,7 +1,6 @@
 package com.lx862.svrutil.feature;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import net.minecraft.text.Text;
 
@@ -30,8 +29,8 @@ public class TextOverrideFeature extends Feature {
     }
 
     @Override
-    public JsonObject writeConfig() {
-        JsonObject jsonObject = super.writeConfig();
+    public JsonObject generateConfig() {
+        JsonObject jsonObject = super.generateConfig();
         if(whitelistedMessage == null) {
             jsonObject.addProperty("whitelistedMessage", "You are not whitelisted on the server.");
         } else {

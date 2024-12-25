@@ -19,8 +19,8 @@ public class HungerFeature extends Feature {
     }
 
     @Override
-    public JsonObject writeConfig() {
-        JsonObject jsonObject = super.writeConfig();
+    public JsonObject generateConfig() {
+        JsonObject jsonObject = super.generateConfig();
         jsonObject.addProperty("minLevel", minHunger);
         jsonObject.addProperty("maxLevel", maxHunger);
         return jsonObject;

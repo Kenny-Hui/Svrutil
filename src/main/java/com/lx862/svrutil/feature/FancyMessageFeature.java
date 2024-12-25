@@ -1,7 +1,6 @@
 package com.lx862.svrutil.feature;
 
 import com.google.gson.JsonObject;
-import net.minecraft.server.MinecraftServer;
 
 public class FancyMessageFeature extends Feature {
 
@@ -15,8 +14,8 @@ public class FancyMessageFeature extends Feature {
     }
 
     @Override
-    public JsonObject writeConfig() {
-        JsonObject jsonObject = super.writeConfig();
+    public JsonObject generateConfig() {
+        JsonObject jsonObject = super.generateConfig();
         return jsonObject;
     }
 }
