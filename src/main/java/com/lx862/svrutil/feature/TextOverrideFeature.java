@@ -2,6 +2,7 @@ package com.lx862.svrutil.feature;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import eu.pb4.placeholders.api.TextParserUtils;
 import net.minecraft.text.Text;
 
 public class TextOverrideFeature extends Feature {
@@ -17,12 +18,12 @@ public class TextOverrideFeature extends Feature {
         if(jsonObject.has("whitelistedMessage")) {
             JsonElement element = jsonObject.get("whitelistedMessage");
             try {
-                whitelistedMessage = Text.Serializer.fromJson(element.getAsString());
+                whitelistedMessage = Text.Serializer.fromJson(element);
             } catch (Exception ignored) {
             }
 
             try {
-                whitelistedMessage = Text.Serializer.fromJson(element);
+                whitelistedMessage = TextParserUtils.formatText(element.getAsString());
             } catch (Exception ignored) {
             }
         }
@@ -31,11 +32,7 @@ public class TextOverrideFeature extends Feature {
     @Override
     public JsonObject generateConfig() {
         JsonObject jsonObject = super.generateConfig();
-        if(whitelistedMessage == null) {
-            jsonObject.addProperty("whitelistedMessage", "You are not whitelisted on the server.");
-        } else {
-            jsonObject.addProperty("whitelistedMessage", Text.Serializer.toJson(whitelistedMessage));
-        }
+        jsonObject.addProperty("whitelistedMessage", "You are not whitelisted on the server.");
         return jsonObject;
     }
 
