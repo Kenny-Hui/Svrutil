@@ -51,7 +51,7 @@ public class JoinMessageFeature extends Feature {
         ServerPlayerEntity player = dispatcher.getPlayer();
         
         for(JoinMessage joinMessage : joinMessages) {
-            if(!joinMessage.permLevel.isEmpty() && !joinMessage.permLevel.contains(server.getPermissionLevel(player.getGameProfile()))) return;
+            if(!joinMessage.permLevel.isEmpty() && !joinMessage.permLevel.contains(server.getPermissionLevel(player.getGameProfile()))) continue;
             PlaceholderContext placeholderContext = new PlaceholderContext(server, server.getCommandSource(), player.getWorld(), player, player, player.getGameProfile());
 
             TickManager.schedule(joinMessage.delayTick, () -> {
