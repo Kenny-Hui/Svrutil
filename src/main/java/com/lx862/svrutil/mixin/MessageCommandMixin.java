@@ -37,7 +37,7 @@ public class MessageCommandMixin {
             for(ServerPlayerEntity target : targets) {
                 Text msgContent = message.getContent();
 
-                source.sendFeedback(Text.literal(String.format("§6[me §r-> §6%s]: ", target.getGameProfile().getName())).append(msgContent), false);
+                source.sendFeedback(() -> Text.literal(String.format("§6[me §r-> §6%s]: ", target.getGameProfile().getName())).append(msgContent), false);
                 target.sendMessage(Text.literal(String.format("§6[%s §r-> §6me]: ", playerName)).append(msgContent), false);
 
                 Identifier soundEffect = ((FancyMessageFeature)FeatureSet.FANCY_MESSAGE.feature).getMessageSound();

@@ -31,7 +31,7 @@ public class overworld {
                     /* TP player to the overworld.
                     I don't know what magic this FabricDimension thing does, but using vanilla teleport could screw up everything horribly */
                     FabricDimensions.teleport(player, overworld, new TeleportTarget(new Vec3d(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ()), player.getVelocity(), player.getYaw(), player.getPitch()));
-                    context.getSource().sendFeedback(Text.literal("Teleported to the overworld.").formatted(Formatting.GREEN), false);
+                    context.getSource().sendFeedback(() -> Text.literal("Teleported to the overworld.").formatted(Formatting.GREEN), false);
                     Commands.finishedExecution(context, defaultEntry);
                     return 1;
                 })

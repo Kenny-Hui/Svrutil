@@ -32,7 +32,7 @@ public class opLevel {
                         levelString = String.valueOf(level);
                     }
 
-                    context.getSource().sendFeedback(Text.literal("Target have OP level " + levelString).formatted(Formatting.GOLD), false);
+                    context.getSource().sendFeedback(() -> Text.literal("Target have OP level " + levelString).formatted(Formatting.GOLD), false);
                     Commands.finishedExecution(context, defaultEntry);
                     return 1;
                 }))

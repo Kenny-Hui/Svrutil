@@ -29,12 +29,14 @@ public class where {
                         ClickEvent tpClickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + coords);
                         HoverEvent tpHoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to teleport").formatted(Formatting.GREEN));
                         Text coordsText = Text.literal(coords).formatted(Formatting.GOLD).styled(style -> style.withClickEvent(tpClickEvent).withHoverEvent(tpHoverEvent));
-                        Text distText = Text.literal("");
+                        Text distText;
                         if(context.getSource().isExecutedByPlayer()) {
                             distText = Text.literal(" (" + Math.round(target.getPos().distanceTo(context.getSource().getPlayerOrThrow().getPos())) + "m away)").formatted(Formatting.GREEN);
+                        } else {
+                            distText = Text.literal("");
                         }
 
-                        context.getSource().sendFeedback(Text.literal("").append(target.getDisplayName()).append(" is at ").append(coordsText).append(distText), false);
+                        context.getSource().sendFeedback(() -> Text.literal("").append(target.getDisplayName()).append(" is at ").append(coordsText).append(distText), false);
                         Commands.finishedExecution(context, defaultEntry);
                         return 1;
                     })

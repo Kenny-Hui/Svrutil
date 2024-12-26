@@ -44,7 +44,7 @@ public class spd {
         if(speedFactor == null) {
             entityAttributeInstance.removeModifier(walkSpeedUUID);
             player.getAbilities().setFlySpeed(DEFAULT_FLY_SPEED);
-            context.getSource().sendFeedback(Text.literal("Walking and flying speed has been reset").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(() -> Text.literal("Walking and flying speed has been reset").formatted(Formatting.GREEN), false);
         } else {
             EntityAttributeModifier entityAttributeModifier = new EntityAttributeModifier(walkSpeedUUID, ModInfo.MOD_NAME + " Speed Modifier", speedFactor, EntityAttributeModifier.Operation.MULTIPLY_BASE);
             player.getAbilities().setFlySpeed((float)(DEFAULT_FLY_SPEED * speedFactor));
@@ -54,7 +54,7 @@ public class spd {
             }
 
             entityAttributeInstance.addTemporaryModifier(entityAttributeModifier);
-            context.getSource().sendFeedback(Text.literal("Walking and flying speed set to " + speedFactor + "x").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(() -> Text.literal("Walking and flying speed set to " + speedFactor + "x").formatted(Formatting.GREEN), false);
         }
 
         player.sendAbilitiesUpdate();

@@ -28,14 +28,14 @@ public class r {
                             String player = context.getSource().getName();
                             Collection<String> targets = SvrUtil.lastReply.get(player);
                             if(targets == null || targets.isEmpty()) {
-                                context.getSource().sendFeedback(Text.literal("Either no one have replied to you, or the player is offline.").formatted(Formatting.GRAY), false);
+                                context.getSource().sendFeedback(() -> Text.literal("Either no one have replied to you, or the player is offline.").formatted(Formatting.GRAY), false);
                                 return 1;
                             }
 
                             for(String targetName : targets) {
                                 ServerPlayerEntity target = context.getSource().getServer().getPlayerManager().getPlayer(targetName);
                                 if (context.getSource().getWorld().getPlayerByUuid(target.getUuid()) == null) {
-                                    context.getSource().sendFeedback(Text.literal(String.format("Cannot reply as %s is now offline")).formatted(Formatting.RED), false);
+                                    context.getSource().sendFeedback(() -> Text.literal(String.format("Cannot reply as %s is now offline")).formatted(Formatting.RED), false);
                                     continue;
                                 }
 

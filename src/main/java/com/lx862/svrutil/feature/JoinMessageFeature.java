@@ -50,7 +50,7 @@ public class JoinMessageFeature extends Feature {
         
         for(JoinMessage joinMessage : joinMessages) {
             if(!joinMessage.permLevel.isEmpty() && !joinMessage.permLevel.contains(server.getPermissionLevel(player.getGameProfile()))) continue;
-            PlaceholderContext placeholderContext = new PlaceholderContext(server, server.getCommandSource(), player.getWorld(), player, player, player.getGameProfile());
+            PlaceholderContext placeholderContext = new PlaceholderContext(server, server.getCommandSource(), player.getServerWorld(), player, player, player.getGameProfile());
 
             TickManager.schedule(joinMessage.delayTick, () -> {
                 if(joinMessage.title != null) player.networkHandler.sendPacket(new TitleS2CPacket(Placeholders.parseText(TextParserUtils.formatText(joinMessage.title), placeholderContext)));

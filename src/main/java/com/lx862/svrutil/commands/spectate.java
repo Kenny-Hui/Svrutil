@@ -45,7 +45,7 @@ public class spectate {
 
     private static int execute(CommandContext<ServerCommandSource> context, ServerPlayerEntity player, Entity target) {
         player.networkHandler.sendPacket(new SetCameraEntityS2CPacket(target));
-        context.getSource().sendFeedback(Text.literal("Now spectating ").append(target.getDisplayName()).formatted(Formatting.GREEN), false);
+        context.getSource().sendFeedback(() -> Text.literal("Now spectating ").append(target.getDisplayName()).formatted(Formatting.GREEN), false);
         return 1;
     }
 }

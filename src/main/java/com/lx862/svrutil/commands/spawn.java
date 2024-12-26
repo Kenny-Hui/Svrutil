@@ -39,7 +39,7 @@ public class spawn {
         }
 
         player.requestTeleportAndDismount(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
-        context.getSource().sendFeedback(Text.literal("Teleported back to spawn.").formatted(Formatting.GREEN), false);
+        context.getSource().sendFeedback(() -> Text.literal("Teleported back to spawn.").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }

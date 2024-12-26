@@ -34,7 +34,7 @@ public class unspectate {
 
     private static int execute(CommandContext<ServerCommandSource> context, ServerPlayerEntity player) {
         player.networkHandler.sendPacket(new SetCameraEntityS2CPacket(player));
-        context.getSource().sendFeedback(Text.literal("Removed spectate effect.").formatted(Formatting.GREEN), false);
+        context.getSource().sendFeedback(() -> Text.literal("Removed spectate effect.").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }

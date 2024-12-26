@@ -1,8 +1,6 @@
 package com.lx862.svrutil.config;
 
 import com.google.gson.*;
-import com.lx862.svrutil.SvrUtil;
-import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.data.CommandEntry;
 import com.lx862.svrutil.data.SvrUtilLogger;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +24,7 @@ public class CommandConfig {
         SvrUtilLogger.info("Reading Command config...");
         commandEntries.clear();
         try {
-            final JsonObject jsonConfig = new JsonParser().parse(String.join("", Files.readAllLines(CONFIG_PATH))).getAsJsonObject();
+            final JsonObject jsonConfig = JsonParser.parseString(String.join("", Files.readAllLines(CONFIG_PATH))).getAsJsonObject();
 
             if(jsonConfig.has("overrides")) {
                 JsonObject commandConfig = jsonConfig.getAsJsonObject("overrides");

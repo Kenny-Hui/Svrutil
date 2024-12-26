@@ -52,10 +52,10 @@ public class clienttime {
         UUID playerUuid = player.getUuid();
         if(reset) {
             SvrUtil.fakeTimeList.remove(playerUuid);
-            context.getSource().sendFeedback(Text.literal("Client time has been reset.").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(() -> Text.literal("Client time has been reset.").formatted(Formatting.GREEN), false);
         } else {
             SvrUtil.fakeTimeList.put(playerUuid, (long)time);
-            context.getSource().sendFeedback(Text.literal("Client time set to " + time).formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(() -> Text.literal("Client time set to " + time).formatted(Formatting.GREEN), false);
         }
         Commands.finishedExecution(context, defaultEntry);
         return 1;

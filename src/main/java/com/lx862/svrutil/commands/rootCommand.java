@@ -34,33 +34,33 @@ public class rootCommand {
     }
 
     private static int executeAbout(CommandContext<ServerCommandSource> context) {
-        String homepageUrl = null;
+        String homepageUrl;
         try {
             // Terrible but it works
             homepageUrl = FabricLoader.getInstance().getModContainer(ModInfo.MOD_ID).get().getMetadata().getContact().get("homepage").get();
         } catch (Exception e) {
             e.printStackTrace();
+            Commands.finishedExecution(context, defaultEntry);
+            return 1;
         }
 
-        context.getSource().sendFeedback(Text.literal(ModInfo.MOD_NAME).formatted(Formatting.GOLD), false);
-        context.getSource().sendFeedback(Text.literal("Version " + ModInfo.getVersion()), false);
-        if(homepageUrl != null) {
-            final ClickEvent openHomepageEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, homepageUrl);
-            context.getSource().sendFeedback(Text.literal(homepageUrl).styled(style -> style.withClickEvent(openHomepageEvent)).formatted(Formatting.UNDERLINE).formatted(Formatting.GREEN), false);
-        }
+        context.getSource().sendFeedback(() -> Text.literal(ModInfo.MOD_NAME).formatted(Formatting.GOLD), false);
+        context.getSource().sendFeedback(() -> Text.literal("Version " + ModInfo.getVersion()), false);
+        final ClickEvent openHomepageEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, homepageUrl);
+        context.getSource().sendFeedback(() -> Text.literal(homepageUrl).styled(style -> style.withClickEvent(openHomepageEvent)).formatted(Formatting.UNDERLINE).formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
     }
 
     private static int executeReload(CommandContext<ServerCommandSource> context) {
-        context.getSource().sendFeedback(Text.literal("Reloading Config...").formatted(Formatting.GOLD), false);
+        context.getSource().sendFeedback(() -> Text.literal("Reloading Config...").formatted(Formatting.GOLD), false);
         List<String> error = Config.loadAll();
         if(!error.isEmpty()) {
             String failed = String.join(",", error);
-            context.getSource().sendFeedback(Text.literal("Config Reloaded. " + failed + " failed to load.").formatted(Formatting.RED), false);
-            context.getSource().sendFeedback(Text.literal("Please check whether the JSON syntax is correct!").formatted(Formatting.RED), false);
+            context.getSource().sendFeedback(() -> Text.literal("Config Reloaded. " + failed + " failed to load.").formatted(Formatting.RED), false);
+            context.getSource().sendFeedback(() -> Text.literal("Please check whether the JSON syntax is correct!").formatted(Formatting.RED), false);
         } else {
-            context.getSource().sendFeedback(Text.literal(ModInfo.MOD_NAME + " Config Reloaded!").formatted(Formatting.GREEN), false);
+            context.getSource().sendFeedback(() -> Text.literal(ModInfo.MOD_NAME + " Config Reloaded!").formatted(Formatting.GREEN), false);
         }
         Commands.finishedExecution(context, defaultEntry);
         return 1;

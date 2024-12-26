@@ -30,7 +30,7 @@ public class fancyKick {
 
                                 for(ServerPlayerEntity player : targets) {
                                     player.networkHandler.disconnect(text);
-                                    context.getSource().sendFeedback(Text.translatable("commands.kick.success", player.getDisplayName(), text), true);
+                                    context.getSource().sendFeedback(() -> Text.translatable("commands.kick.success", player.getDisplayName(), text), true);
                                 }
 
                                 Commands.finishedExecution(context, defaultEntry);
