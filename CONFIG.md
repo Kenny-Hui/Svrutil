@@ -4,23 +4,20 @@ All config file are stored in the JSON format, and a default config file will be
 The config file are located in `Your Fabric Instance/config/svrutil/feature.json`.
 
 ### join_message
-This section describes a list of join message to show when player joined the server.
+This section describes the list of join message entry to show when player joined the server, described below.
 
-#### Welcome Message Entry
+| Key     | Description                                 |
+|---------|---------------------------------------------|
+| entries | An array of Join Message Object, see below. |
 
-| Key          | Description                                                                              | Default Value                                      |
-|--------------|------------------------------------------------------------------------------------------|----------------------------------------------------|
-| title        | A Color-Text entry for the main title to appear at the center of the screen              | 2 (Vanilla)                                        |
-| subtitle     | A Color-Text entry for the subtitle to appear below title at the center of the screen    | false                                              |
-| message      | A Color-Text entry for the chat message to be sent.                                      | 0 (All)                                            |
-| delayTick    | How much Minecraft tick to delay before sending this welcome message to the player.      | "Internal Exception: java.lang.StackOverflowError" |
-| permLevels   | The OP level that this welcome message is sent to.                                       | [1, 2, 3, 4]                                       |
-
-#### Color-Text Entry
-| Key                         | Description                                                                                           |
-|-----------------------------|-------------------------------------------------------------------------------------------------------|
-| color                       | Human readable color name (i.e. "green")                                                              |
-| text                        | The text content to show                                                                              |
+#### Join Message Object
+| Key        | Description                                                                                                                                       |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| title      | The title that are displayed to the player. ([Simplified Text Format](https://placeholders.pb4.eu/user/text-format/))                             |
+| subtitle   | The subtitle that are displayed to the player. ([Simplified Text Format](https://placeholders.pb4.eu/user/text-format/))                          |
+| message    | The chat message that are displayed to the player. ([Simplified Text Format](https://placeholders.pb4.eu/user/text-format/))                      |
+| delayTick  | How long to wait (in Minecraft tick) before showing the welcome message to the player.                                                            |
+| permLevels | An array of numbers representing the op level of the player.<br>Player that are inside the OP Level range will have the welcome message be shown. |
 
 ### hunger
 This section enforces the hunger range for all players, at a scale from 0 to 20.
@@ -39,14 +36,12 @@ This section contains configurations that overrides Vanilla Minecraft mechanics.
 | minItemFrameInteractOpLevel | The minimum OP Level required to be able to interact with item frame.                               |
 | fallingBlockDelay           | How much tick it should take for falling block (i.e. Sand & Gravel) to start falling after placing. |
 
-### Welcome Message Object
-| Key        | Description                                                                                                                                       |
-|------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| title      | The title that are displayed to the player. ([Simplified Text Format](https://placeholders.pb4.eu/user/text-format/))                             |
-| subtitle   | The subtitle that are displayed to the player. ([Simplified Text Format](https://placeholders.pb4.eu/user/text-format/))                          |
-| message    | The chat message that are displayed to the player. ([Simplified Text Format](https://placeholders.pb4.eu/user/text-format/))                      |
-| delayTick  | How long to wait (in Minecraft tick) before showing the welcome message to the player.                                                            |
-| permLevels | An array of numbers representing the op level of the player.<br>Player that are inside the OP Level range will have the welcome message be shown. |
+### fancy_msg
+If enabled, this enables a fancier msg of vanilla's `/msg`, `/w` and `/tell` command.
+
+| Key         | Description                                                                                                   |
+|-------------|---------------------------------------------------------------------------------------------------------------|
+| soundEffect | A string containing the sound ID you want to play to the receiver when message, null to disable sound effect. |
 
 ## Command Config
 The config file are located in `Your Fabric Instance/config/svrutil/commands.json`.
