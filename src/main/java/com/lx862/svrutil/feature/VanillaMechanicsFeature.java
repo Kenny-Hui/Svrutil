@@ -1,6 +1,7 @@
 package com.lx862.svrutil.feature;
 
 import com.google.gson.JsonObject;
+import net.minecraft.util.JsonHelper;
 
 public class VanillaMechanicsFeature extends Feature {
     private int fallingBlockDelay = 2;
@@ -14,9 +15,9 @@ public class VanillaMechanicsFeature extends Feature {
     @Override
     public void readConfig(JsonObject jsonObject) {
         super.readConfig(jsonObject);
-        this.fallingBlockDelay = jsonObject.get("fallingBlockDelay").getAsInt();
-        this.immutableItemFrame = jsonObject.get("immutableItemFrame").getAsBoolean();
-        this.minItemFrameInteractOpLevel = jsonObject.get("minItemFrameInteractOpLevel").getAsInt();
+        this.fallingBlockDelay = JsonHelper.getInt(jsonObject, "fallingBlockDelay", fallingBlockDelay);
+        this.immutableItemFrame = JsonHelper.getBoolean(jsonObject, "immutableItemFrame", immutableItemFrame);
+        this.minItemFrameInteractOpLevel = JsonHelper.getInt(jsonObject, "minItemFrameInteractOpLevel", minItemFrameInteractOpLevel);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.lx862.svrutil.feature;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.pb4.placeholders.api.TextParserUtils;
 import net.minecraft.text.Text;
+import net.minecraft.util.JsonHelper;
 
 public class TextOverrideFeature extends Feature {
     private static Text whitelistedMessage = null;
@@ -15,18 +15,7 @@ public class TextOverrideFeature extends Feature {
     @Override
     public void readConfig(JsonObject jsonObject) {
         super.readConfig(jsonObject);
-        if(jsonObject.has("whitelistedMessage")) {
-            JsonElement element = jsonObject.get("whitelistedMessage");
-            try {
-                whitelistedMessage = Text.Serializer.fromJson(element);
-            } catch (Exception ignored) {
-            }
-
-            try {
-                whitelistedMessage = TextParserUtils.formatText(element.getAsString());
-            } catch (Exception ignored) {
-            }
-        }
+        whitelistedMessage = JsonHelper.hasString(jsonObject, "whitelistedMessage") ? TextParserUtils.formatText(JsonHelper.getString(jsonObject, "whitelistedMessage")) : null;
     }
 
     @Override

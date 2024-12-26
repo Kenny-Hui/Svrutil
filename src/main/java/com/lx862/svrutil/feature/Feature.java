@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.util.JsonHelper;
 
 public abstract class Feature {
     public final String displayName;
@@ -16,7 +17,7 @@ public abstract class Feature {
     }
 
     public void readConfig(JsonObject jsonObject) {
-        this.enabled = jsonObject.has("enabled") && jsonObject.get("enabled").getAsBoolean();
+        this.enabled = JsonHelper.getBoolean(jsonObject, "enabled", false);
     }
 
     public JsonObject generateConfig() {

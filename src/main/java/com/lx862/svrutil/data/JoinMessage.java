@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import eu.pb4.placeholders.api.TextParserUtils;
 import net.minecraft.text.Text;
+import net.minecraft.util.JsonHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,10 @@ public class JoinMessage {
 
     public static JoinMessage fromJson(JsonObject jsonObject) {
         List<Integer> permLevels = new ArrayList<>();
-        int delayTick = jsonObject.has("delayTick") ? jsonObject.get("delayTick").getAsInt() : 0;
-        Text title = jsonObject.has("title") ? TextParserUtils.formatText(jsonObject.get("title").getAsString()) : null;
-        Text subtitle = jsonObject.has("subtitle") ? TextParserUtils.formatText(jsonObject.get("subtitle").getAsString()) : null;
-        Text joinMessage = jsonObject.has("message") ? TextParserUtils.formatText(jsonObject.get("message").getAsString()) : null;
+        Text title = JsonHelper.hasString(jsonObject, "title") ? TextParserUtils.formatText(JsonHelper.getString(jsonObject, "title")) : null;
+        Text subtitle = JsonHelper.hasString(jsonObject, "subtitle") ? TextParserUtils.formatText(JsonHelper.getString(jsonObject, "subtitle")) : null;
+        Text joinMessage = JsonHelper.hasString(jsonObject, "message") ? TextParserUtils.formatText(JsonHelper.getString(jsonObject, "message")) : null;
+        int delayTick = JsonHelper.getInt(jsonObject, "delayTick", 0);
 
         try {
             jsonObject.get("permLevels").getAsJsonArray().forEach(e -> {

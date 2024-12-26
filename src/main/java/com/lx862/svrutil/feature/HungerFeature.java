@@ -2,6 +2,7 @@ package com.lx862.svrutil.feature;
 
 import com.google.gson.JsonObject;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.JsonHelper;
 
 public class HungerFeature extends Feature {
     public int minHunger = 0;
@@ -14,8 +15,8 @@ public class HungerFeature extends Feature {
     @Override
     public void readConfig(JsonObject jsonObject) {
         super.readConfig(jsonObject);
-        this.minHunger = jsonObject.get("minLevel").getAsInt();
-        this.maxHunger = jsonObject.get("maxLevel").getAsInt();
+        this.minHunger = JsonHelper.getInt(jsonObject, "minLevel", minHunger);
+        this.maxHunger = JsonHelper.getInt(jsonObject, "maxLevel", maxHunger);
     }
 
     @Override

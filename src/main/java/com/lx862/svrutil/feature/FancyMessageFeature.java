@@ -15,7 +15,6 @@ public class FancyMessageFeature extends Feature {
 
     @Override
     public JsonObject generateConfig() {
-        JsonObject jsonObject = super.generateConfig();
-        return jsonObject;
+        return super.generateConfig();
     }
 }
