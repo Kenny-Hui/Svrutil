@@ -7,6 +7,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -32,7 +33,7 @@ public abstract class ItemFrameMixin extends AbstractDecorationEntity {
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if(FeatureSet.VANILLA_MECHANICS.feature.enabled && ((VanillaMechanicsFeature) FeatureSet.VANILLA_MECHANICS.feature).getImmutableItemFrame()) {
-            if(source.isExplosive() || source.isProjectile()) {
+            if(!source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.isSourceCreativePlayer()) {
                 cir.setReturnValue(false);
             }
         }

@@ -5,13 +5,13 @@ import com.lx862.svrutil.feature.TextOverrideFeature;
 import com.lx862.svrutil.feature.Feature;
 import com.lx862.svrutil.feature.FeatureSet;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

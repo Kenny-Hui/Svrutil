@@ -8,11 +8,13 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.command.suggestion.SuggestionProviders;
-import net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 
@@ -44,7 +46,7 @@ public class playsoundarea {
         Identifier sound = IdentifierArgumentType.getIdentifier(context, "sound");
 
         for (ServerPlayerEntity player : playersInRange) {
-            player.networkHandler.sendPacket(new PlaySoundIdS2CPacket(sound, SoundCategory.MASTER, player.getPos(), volume, pitch, player.getWorld().getRandom().nextLong()));
+            player.networkHandler.sendPacket(new PlaySoundS2CPacket(RegistryEntry.of(SoundEvent.of(sound)), SoundCategory.MASTER, player.getPos().x, player.getPos().y, player.getPos().z, volume, pitch, player.getWorld().getRandom().nextLong()));
         }
         return 1;
     }
