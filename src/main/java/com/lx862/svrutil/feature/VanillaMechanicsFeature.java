@@ -21,8 +21,8 @@ public class VanillaMechanicsFeature extends Feature {
     }
 
     @Override
-    public JsonObject generateConfig() {
-        JsonObject jsonObject = super.generateConfig();
+    public JsonObject writeConfig() {
+        JsonObject jsonObject = super.writeConfig();
         jsonObject.addProperty("fallingBlockDelay", fallingBlockDelay);
         jsonObject.addProperty("immutableItemFrame", immutableItemFrame);
         jsonObject.addProperty("minItemFrameInteractOpLevel", minItemFrameInteractOpLevel);

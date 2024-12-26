@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.lx862.svrutil.data.SvrUtilLogger;
 import com.lx862.svrutil.feature.FeatureSet;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -30,13 +31,12 @@ public class FeatureConfig {
                     featureSet.feature.readConfig(jsonConfig.getAsJsonObject(configEntryName));
                 } else {
                     needWriteConfig = true;
-                    jsonConfig.add(configEntryName, featureSet.feature.generateConfig());
                 }
             }
 
             if(needWriteConfig) {
-                SvrUtilLogger.info("Feature config file changed, writing to disk...");
-                Files.write(CONFIG_PATH, Collections.singleton(new GsonBuilder().setPrettyPrinting().create().toJson(jsonConfig)));
+                writeConfig();
+                load();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,5 +44,14 @@ public class FeatureConfig {
         }
 
         return true;
+    }
+
+    public static void writeConfig() throws IOException {
+        final JsonObject jsonConfig = new JsonObject();
+        for(FeatureSet featureSet : FeatureSet.values()) {
+            String configEntryName = featureSet.feature.configName;
+            jsonConfig.add(configEntryName, featureSet.feature.writeConfig());
+        }
+        Files.write(CONFIG_PATH, Collections.singleton(new GsonBuilder().setPrettyPrinting().create().toJson(jsonConfig)));
     }
 }
