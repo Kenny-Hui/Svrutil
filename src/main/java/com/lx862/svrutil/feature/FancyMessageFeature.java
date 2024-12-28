@@ -14,13 +14,13 @@ public class FancyMessageFeature extends Feature {
     @Override
     public void readConfig(JsonObject jsonObject) {
         super.readConfig(jsonObject);
-        messageSound = Identifier.tryParse(JsonHelper.getString(jsonObject, "messageSound", "!"));
+        messageSound = Identifier.tryParse(JsonHelper.getString(jsonObject, "soundEffect", "!"));
     }
 
     @Override
     public JsonObject writeConfig() {
         JsonObject jsonObject = super.writeConfig();
-        jsonObject.addProperty("messageSound", messageSound == null ? null : messageSound.toString());
+        jsonObject.addProperty("soundEffect", messageSound == null ? null : messageSound.toString());
         return jsonObject;
     }
 
