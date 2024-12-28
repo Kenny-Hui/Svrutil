@@ -5,6 +5,8 @@ import com.lx862.svrutil.commands.afk;
 import com.lx862.svrutil.feature.FancyMessageFeature;
 import com.lx862.svrutil.feature.FeatureSet;
 import net.minecraft.network.message.SignedMessage;
+import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.command.MessageCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -42,7 +44,7 @@ public class MessageCommandMixin {
 
                 Identifier soundEffect = ((FancyMessageFeature)FeatureSet.FANCY_MESSAGE.feature).getMessageSound();
                 if(soundEffect != null) {
-                    target.playSound(SoundEvent.of(soundEffect), SoundCategory.MASTER, 1, 1);
+                    target.networkHandler.sendPacket(new PlaySoundS2CPacket(RegistryEntry.of(SoundEvent.of(soundEffect)), SoundCategory.MASTER, target.getX(), target.getY(), target.getZ(), 1, 1, target.getWorld().getRandom().nextLong()));
                 }
 
                 if(afk.afkList.containsKey(target.getUuid()) && source.isExecutedByPlayer()) {
