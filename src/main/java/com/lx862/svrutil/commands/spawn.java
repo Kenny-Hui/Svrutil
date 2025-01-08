@@ -9,9 +9,11 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class spawn {
     private static final CommandEntry defaultEntry = new CommandEntry("spawn", 0, true);
@@ -30,15 +32,18 @@ public class spawn {
     }
 
     public static int execute(CommandContext<ServerCommandSource> context, ServerPlayerEntity player, boolean personal) throws CommandSyntaxException {
-        BlockPos spawnPoint = null;
+        final ServerWorld dimension;
+        final BlockPos spawnPoint;
         if(personal) {
             spawnPoint = player.getSpawnPointPosition();
-        }
-        if(spawnPoint == null) {
+            dimension = context.getSource().getServer().getWorld(player.getSpawnPointDimension());
+        } else {
             spawnPoint = context.getSource().getWorld().getSpawnPos();
+            dimension = context.getSource().getWorld();
         }
 
-        player.requestTeleportAndDismount(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
+        player.dismountVehicle();
+        player.requestTeleport(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
         context.getSource().sendFeedback(() -> Text.literal("Teleported back to spawn.").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;
