@@ -24,6 +24,6 @@ public class SvrUtil implements ModInitializer {
         ServerPlayConnectionEvents.JOIN.register(Events::onJoin);
         ServerTickEvents.START_SERVER_TICK.register(Events::onServerTick);
         ServerTickEvents.END_SERVER_TICK.register(Events::onTickEnd);
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated, third) -> Commands.register(dispatcher));
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, third) -> Commands.register(dispatcher, registryAccess));
     }
 }

@@ -1,12 +1,13 @@
 package com.lx862.svrutil.commands;
 
 import com.lx862.svrutil.Commands;
-import com.lx862.svrutil.ModInfo;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -15,15 +16,14 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 
-import java.util.UUID;
-
-public class spd {
+public class SpdCommand {
     private static final float DEFAULT_FLY_SPEED = 0.05F;
-    private static final UUID walkSpeedUUID = UUID.fromString("a1c7649f-402b-4c75-832b-3e3f418a6886");
+    private static final Identifier SPEED_MODIFIER_ID = Identifier.of("svrutil:speed");
     private static final CommandEntry defaultEntry = new CommandEntry("spd", 2, true);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
 
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
         if(!entry.enabled) return;
@@ -36,21 +36,21 @@ public class spd {
         ));
     }
 
-    private static int execute(CommandContext<ServerCommandSource> context, Double speedFactor) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
+    private static int execute(CommandContext<ServerCommandSource> context, Double speedFactor) throws CommandSyntaxException {
+        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
         EntityAttributeInstance entityAttributeInstance = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
         if(entityAttributeInstance == null) return 1;
 
         if(speedFactor == null) {
-            entityAttributeInstance.removeModifier(walkSpeedUUID);
+            entityAttributeInstance.removeModifier(SPEED_MODIFIER_ID);
             player.getAbilities().setFlySpeed(DEFAULT_FLY_SPEED);
             context.getSource().sendFeedback(() -> Text.literal("Walking and flying speed has been reset").formatted(Formatting.GREEN), false);
         } else {
-            EntityAttributeModifier entityAttributeModifier = new EntityAttributeModifier(walkSpeedUUID, ModInfo.MOD_NAME + " Speed Modifier", speedFactor, EntityAttributeModifier.Operation.MULTIPLY_BASE);
+            EntityAttributeModifier entityAttributeModifier = new EntityAttributeModifier(SPEED_MODIFIER_ID, speedFactor, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
             player.getAbilities().setFlySpeed((float)(DEFAULT_FLY_SPEED * speedFactor));
 
-            if(entityAttributeInstance.hasModifier(entityAttributeModifier)) {
-                entityAttributeInstance.removeModifier(walkSpeedUUID);
+            if(entityAttributeInstance.hasModifier(SPEED_MODIFIER_ID)) {
+                entityAttributeInstance.removeModifier(SPEED_MODIFIER_ID);
             }
 
             entityAttributeInstance.addTemporaryModifier(entityAttributeModifier);

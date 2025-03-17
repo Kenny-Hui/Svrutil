@@ -6,6 +6,7 @@ import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -13,12 +14,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-public class spawn {
+public class SpawnCommand {
     private static final CommandEntry defaultEntry = new CommandEntry("spawn", 0, true);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
         if(!entry.enabled) return;
 
@@ -43,7 +43,7 @@ public class spawn {
         }
 
         player.dismountVehicle();
-        player.requestTeleport(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
+        player.teleport(dimension, spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ(), player.getYaw(), player.getPitch());
         context.getSource().sendFeedback(() -> Text.literal("Teleported back to spawn.").formatted(Formatting.GREEN), false);
         Commands.finishedExecution(context, defaultEntry);
         return 1;

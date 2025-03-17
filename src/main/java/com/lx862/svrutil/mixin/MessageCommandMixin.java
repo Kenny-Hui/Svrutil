@@ -1,7 +1,7 @@
 package com.lx862.svrutil.mixin;
 
 import com.lx862.svrutil.SvrUtil;
-import com.lx862.svrutil.commands.afk;
+import com.lx862.svrutil.commands.AfkCommand;
 import com.lx862.svrutil.feature.FancyMessageFeature;
 import com.lx862.svrutil.feature.FeatureSet;
 import net.minecraft.network.message.SignedMessage;
@@ -47,7 +47,7 @@ public class MessageCommandMixin {
                     target.networkHandler.sendPacket(new PlaySoundS2CPacket(RegistryEntry.of(SoundEvent.of(soundEffect)), SoundCategory.MASTER, target.getX(), target.getY(), target.getZ(), 1, 1, target.getWorld().getRandom().nextLong()));
                 }
 
-                if(afk.afkList.containsKey(target.getUuid()) && source.isExecutedByPlayer()) {
+                if(AfkCommand.afkList.containsKey(target.getUuid()) && source.isExecutedByPlayer()) {
                     source.getPlayer().sendMessageToClient(Text.literal("").append(target.getDisplayName()).append(" are AFK and may not be available at the moment.").formatted(Formatting.YELLOW), true);
                 }
             }

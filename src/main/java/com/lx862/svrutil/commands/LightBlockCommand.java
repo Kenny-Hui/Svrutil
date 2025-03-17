@@ -7,17 +7,20 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BlockStateComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.state.property.Properties;
 
-public class lightblock {
+public class LightBlockCommand {
     private static final CommandEntry defaultEntry = new CommandEntry("lightblock", 2, true);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
         if(!entry.enabled) return;
 
@@ -32,9 +35,7 @@ public class lightblock {
     private static int execute(CommandContext<ServerCommandSource> context, int level) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
         ItemStack stack = new ItemStack(Items.LIGHT);
-        NbtCompound blockStateTag = new NbtCompound();
-        blockStateTag.putInt("level", level);
-        stack.getOrCreateNbt().put("BlockStateTag", blockStateTag);
+        stack.set(DataComponentTypes.BLOCK_STATE, BlockStateComponent.DEFAULT.with(Properties.LEVEL_15, level));
         player.giveItemStack(stack);
         Commands.finishedExecution(context, defaultEntry);
         return 1;

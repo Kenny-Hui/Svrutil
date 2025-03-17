@@ -6,6 +6,8 @@ import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -16,13 +18,12 @@ import net.minecraft.util.Formatting;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class afk {
+public class AfkCommand {
     private static final CommandEntry defaultEntry = new CommandEntry("afk", 0, true);
     public static final HashMap<UUID, String> afkList = new HashMap<>();
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
-
         if(!entry.enabled) return;
 
         dispatcher.register(CommandManager.literal(entry.commandName)
@@ -34,8 +35,8 @@ public class afk {
         );
     }
 
-    private static int execute(CommandContext<ServerCommandSource> context, String reason) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
+    private static int execute(CommandContext<ServerCommandSource> context, String reason) throws CommandSyntaxException {
+        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
         if(player == null) return 1;
         Text playerName = player.getDisplayName();
 

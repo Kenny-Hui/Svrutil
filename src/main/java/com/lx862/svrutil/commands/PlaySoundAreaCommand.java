@@ -5,6 +5,7 @@ import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.command.suggestion.SuggestionProviders;
@@ -20,10 +21,10 @@ import net.minecraft.util.math.Box;
 
 import java.util.List;
 
-public class playsoundarea {
+public class PlaySoundAreaCommand {
     private static final CommandEntry defaultEntry = new CommandEntry("playsoundarea", 2, true);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
         if(!entry.enabled) return;
 

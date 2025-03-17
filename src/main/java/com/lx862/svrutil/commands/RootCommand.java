@@ -8,6 +8,7 @@ import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.ClickEvent;
@@ -16,19 +17,19 @@ import net.minecraft.util.Formatting;
 
 import java.util.List;
 
-public class rootCommand {
+public class RootCommand {
     private static final CommandEntry defaultEntry = new CommandEntry("svrutil", 2, true);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
 
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
         if(!entry.enabled) return;
 
         dispatcher.register(CommandManager.literal(entry.commandName)
                 .requires(ctx -> ctx.hasPermissionLevel(entry.permLevel))
-                .executes(rootCommand::executeAbout)
+                .executes(RootCommand::executeAbout)
                 .then(CommandManager.literal("reload")
-                    .executes(rootCommand::executeReload)
+                    .executes(RootCommand::executeReload)
                 )
         );
     }

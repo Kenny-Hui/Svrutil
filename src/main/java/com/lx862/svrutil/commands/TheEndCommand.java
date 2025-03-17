@@ -4,16 +4,21 @@ import com.lx862.svrutil.Commands;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class selfkill {
-    private static final CommandEntry defaultEntry = new CommandEntry("suicide", 0, true);
+public class TheEndCommand {
+    private static final CommandEntry defaultEntry = new CommandEntry("theend", 2, true);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
+
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
         if(!entry.enabled) return;
 
@@ -21,9 +26,10 @@ public class selfkill {
                 .requires(ctx -> ctx.hasPermissionLevel(entry.permLevel))
                 .executes(context -> {
                     ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-                    player.kill();
-
-                    context.getSource().getServer().getPlayerManager().broadcast(Text.literal(player.getDisplayName().getString() + " took their own life.").formatted(Formatting.RED), false);
+                    ServerWorld theEnd = context.getSource().getServer().getWorld(World.END);
+                    BlockPos spawnPoint = theEnd.getSpawnPos();
+                    player.teleport(theEnd, spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ(), player.getYaw(), player.getPitch());
+                    context.getSource().sendFeedback(() -> Text.literal("Teleported to the end.").formatted(Formatting.GREEN), false);
                     Commands.finishedExecution(context, defaultEntry);
                     return 1;
                 })

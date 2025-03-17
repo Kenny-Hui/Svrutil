@@ -4,19 +4,18 @@ import com.lx862.svrutil.Commands;
 import com.lx862.svrutil.config.CommandConfig;
 import com.lx862.svrutil.data.CommandEntry;
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
-public class silentTp {
-    private static final CommandEntry defaultEntry = new CommandEntry("silentTp", 2, true);
+public class OpLevelCommand {
+    private static final CommandEntry defaultEntry = new CommandEntry("opLevel", 2, true);
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         final CommandEntry entry = CommandConfig.getCommandEntry(defaultEntry);
         if(!entry.enabled) return;
 
@@ -25,11 +24,19 @@ public class silentTp {
                 .then(CommandManager.argument("target", EntityArgumentType.player())
                 .executes(context -> {
                     ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-                    Vec3d targetPos = target.getPos();
-                    World targetWorld = target.getWorld();
-                    context.getSource().getPlayerOrThrow().teleport((ServerWorld) targetWorld, targetPos.getX(), targetPos.getY(), targetPos.getZ(), 0.0f, 0.0f);
+                    int level = context.getSource().getServer().getPermissionLevel(target.getGameProfile());
+
+                    String levelString;
+                    if(level == 0) {
+                        levelString = "0 (None)";
+                    } else {
+                        levelString = String.valueOf(level);
+                    }
+
+                    context.getSource().sendFeedback(() -> Text.literal("Target have OP level " + levelString).formatted(Formatting.GOLD), false);
                     Commands.finishedExecution(context, defaultEntry);
                     return 1;
-                })));
+                }))
+        );
     }
 }

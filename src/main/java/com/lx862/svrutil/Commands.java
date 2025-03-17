@@ -5,39 +5,40 @@ import com.lx862.svrutil.data.CommandEntry;
 import com.lx862.svrutil.commands.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.ServerCommandSource;
 
 public class Commands {
 
-    public static void register(CommandDispatcher<net.minecraft.server.command.ServerCommandSource> dispatcher) {
-        afk.register(dispatcher);
-        barrierblock.register(dispatcher);
-        clienttime.register(dispatcher);
-        clientweather.register(dispatcher);
-        cmdblock.register(dispatcher);
-        fancyKick.register(dispatcher);
-        feed.register(dispatcher);
-        fly.register(dispatcher);
-        gma.register(dispatcher);
-        gmc.register(dispatcher);
-        gms.register(dispatcher);
-        gmsp.register(dispatcher);
-        heal.register(dispatcher);
-        playsoundarea.register(dispatcher);
-        rootCommand.register(dispatcher);
-        lightblock.register(dispatcher);
-        opLevel.register(dispatcher);
-        nether.register(dispatcher);
-        overworld.register(dispatcher);
-        r.register(dispatcher);
-        selfkill.register(dispatcher);
-        spawn.register(dispatcher);
-        spd.register(dispatcher);
-        spectate.register(dispatcher);
-        silentTp.register(dispatcher);
-        theend.register(dispatcher);
-        unspectate.register(dispatcher);
-        where.register(dispatcher);
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
+        AfkCommand.register(dispatcher, registryAccess);
+        BarrierBlockCommand.register(dispatcher, registryAccess);
+        ClientTimeCommand.register(dispatcher, registryAccess);
+        ClientWeatherCommand.register(dispatcher, registryAccess);
+        CmdBlockCommand.register(dispatcher, registryAccess);
+        FancyKickCommand.register(dispatcher, registryAccess);
+        FeedCommand.register(dispatcher, registryAccess);
+        FlyCommand.register(dispatcher, registryAccess);
+        GmaCommand.register(dispatcher, registryAccess);
+        GmcCommand.register(dispatcher, registryAccess);
+        GmsCommand.register(dispatcher, registryAccess);
+        GmspCommand.register(dispatcher, registryAccess);
+        HealCommand.register(dispatcher, registryAccess);
+        PlaySoundAreaCommand.register(dispatcher, registryAccess);
+        RootCommand.register(dispatcher, registryAccess);
+        LightBlockCommand.register(dispatcher, registryAccess);
+        OpLevelCommand.register(dispatcher, registryAccess);
+        NetherCommand.register(dispatcher, registryAccess);
+        OverworldCommand.register(dispatcher, registryAccess);
+        RCommand.register(dispatcher, registryAccess);
+        SelfKillCommand.register(dispatcher, registryAccess);
+        SpawnCommand.register(dispatcher, registryAccess);
+        SpdCommand.register(dispatcher, registryAccess);
+        SpectateCommand.register(dispatcher, registryAccess);
+        SilentTpCommand.register(dispatcher, registryAccess);
+        TheEndCommand.register(dispatcher, registryAccess);
+        UnspectateCommand.register(dispatcher, registryAccess);
+        WhereCommand.register(dispatcher, registryAccess);
     }
 
     public static void finishedExecution(CommandContext<ServerCommandSource> context, CommandEntry defaultEntry) {
